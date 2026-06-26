@@ -200,6 +200,24 @@ input,select{font-family:inherit;font-size:15px}
   border-radius:8px;margin-bottom:12px;line-height:1.5}
 .kbd{font-family:Georgia,serif;font-weight:600;color:var(--ink)}
 
+/* ---------- auth gate ---------- */
+.auth-gate{position:fixed;inset:0;z-index:200;background:var(--bg);display:flex;
+  align-items:center;justify-content:center;padding:24px}
+.auth-gate.hide{display:none}
+.auth-box{width:100%;max-width:360px;background:var(--panel);border:1px solid var(--line);
+  border-radius:20px;box-shadow:var(--sh-lg);padding:28px 22px;text-align:center}
+.auth-logo{font-size:44px;margin-bottom:8px}
+.auth-box .field{text-align:left}
+.auth-box h1{color:var(--accent)}
+
+/* ---------- textarea ---------- */
+.field textarea{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:var(--r-sm);
+  background:var(--bg);color:var(--ink);outline:none;font-family:inherit;font-size:15px;
+  min-height:140px;resize:vertical;line-height:1.5;transition:border .15s}
+.field textarea:focus{border-color:var(--accent);background:#fff}
+.note-preview{font-size:14px;color:var(--ink2);overflow:hidden;display:-webkit-box;
+  -webkit-line-clamp:2;-webkit-box-orient:vertical;white-space:pre-wrap}
+
 /* ---------- collection rows (line-wise) ---------- */
 .coll-head{padding:14px 16px 8px;display:flex;justify-content:space-between;align-items:center}
 .coll-head .lbl{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
@@ -239,6 +257,20 @@ input,select{font-family:inherit;font-size:15px}
 </style>
 </head>
 <body>
+
+<div id="authGate" class="auth-gate">
+  <div class="auth-box">
+    <div class="auth-logo">📒</div>
+    <h1 class="serif" style="font-size:24px;margin-bottom:2px">VC Ledger</h1>
+    <p style="color:var(--ink2);font-size:13.5px;margin:0 0 20px">Ledger dekhne ke liye login karo</p>
+    <div class="field"><label>Email</label><input id="gEmail" type="email" placeholder="email" autocomplete="username"></div>
+    <div class="field"><label>Password</label><input id="gPw" type="password" placeholder="password" autocomplete="current-password"></div>
+    <button class="btn full" onclick="gateAuth(false)">Login</button>
+    <button class="btn full ghost" style="margin-top:10px" onclick="gateAuth(true)">Pehli baar? Sign up</button>
+    <div id="gateMsg" style="font-size:12.5px;color:var(--muted);text-align:center;margin-top:14px;min-height:16px"></div>
+  </div>
+</div>
+
 
 <div class="topbar">
   <div class="row">
@@ -326,6 +358,14 @@ input,select{font-family:inherit;font-size:15px}
   </div>
 </div>
 
+<!-- ============ NOTES ============ -->
+<div class="page" id="page-notes">
+  <div class="wrap">
+    <div class="note-line">Yahan koi bhi extra information likh sakte ho — reminders, hisaab ke notes, members ki detail, kuch bhi. Cloud me save rehta hai.</div>
+    <div id="notesList"></div>
+  </div>
+</div>
+
 <!-- ============ BACKUP ============ -->
 <div class="page" id="page-backup">
   <div class="wrap">
@@ -386,6 +426,7 @@ input,select{font-family:inherit;font-size:15px}
   <button id="nav-loans" onclick="go('loans')"><span class="ic">💸</span>Loans</button>
   <button id="nav-ledger" onclick="go('ledger')"><span class="ic">📅</span>Ledger</button>
   <button id="nav-profit" onclick="go('profit')"><span class="ic">🪙</span>Profit</button>
+  <button id="nav-notes" onclick="go('notes')"><span class="ic">📝</span>Notes</button>
 </div>
 
 <div class="modal-bg" id="modalBg" onclick="if(event.target===this)closeModal()">
@@ -874,6 +915,7 @@ function seed(){
     aavak:{'2026-03':3075.000,'2026-04':2825.000,'2026-05':2650.000,'2026-06':2425.000},
     members, loans,
     distributions:[],
+    notes:[],
     // June member cash-outs (exits) — kept as cash-book entries so balance ties to 1934.000
     exits:[
       {id:uid(),memberId:null,name:'Dipesh Khandu (exit)',monthKey:'2026-06',amount:543.500},
@@ -1015,7 +1057,7 @@ function go(p){
   document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('on'));
   const nb=document.getElementById('nav-'+p);if(nb)nb.classList.add('on');
   const fab=document.getElementById('fab');
-  fab.style.display=(p==='members'||p==='loans'||p==='ledger')?'flex':'none';
+  fab.style.display=(p==='members'||p==='loans'||p==='ledger'||p==='notes')?'flex':'none';
   window.scrollTo(0,0);
   render();
 }
@@ -1033,6 +1075,7 @@ function render(){
   if(curPage==='loans')renderLoans();
   if(curPage==='ledger')renderLedger();
   if(curPage==='profit')renderProfit();
+  if(curPage==='notes')renderNotes();
   if(curPage==='backup')renderSettings();
 }
 
@@ -1226,6 +1269,44 @@ function renderProfit(){
     </div></div>`;}).join('');
 }
 
+function renderNotes(){
+  const list=document.getElementById('notesList');
+  const ns=[...(state.notes||[])].sort((a,b)=>(b.updated||0)-(a.updated||0));
+  if(!ns.length){list.innerHTML='<div class="empty"><div class="ic">📝</div><p>Abhi koi note nahi</p><p style="font-size:12.5px">Niche + dabakar pehla note likho</p></div>';return;}
+  list.innerHTML='<div class="card">'+ns.map(n=>{
+    const d=n.updated?new Date(n.updated):null;
+    const ds=d?d.toLocaleDateString('en-GB')+' '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}):'';
+    const title=(n.text||'').trim().split('\n')[0].slice(0,40)||'(khaali note)';
+    return `<div class="lrow tap" onclick="noteForm('${n.id}')" style="align-items:flex-start">
+      <div class="av" style="background:var(--gold-soft);color:var(--gold)">📝</div>
+      <div class="mn"><div class="nm">${esc(title)}</div>
+        <div class="note-preview">${esc((n.text||'').trim())}</div>
+        <div class="ds" style="margin-top:3px">${ds}</div></div>
+    </div>`;}).join('')+'</div>';
+}
+function noteForm(id){
+  const n=id?(state.notes||[]).find(x=>x.id===id):null;
+  openModal(`<div class="modal-head"><h2>${n?'Edit note':'Naya note'}</h2><button class="x" onclick="closeModal()">×</button></div>
+  <div class="modal-body">
+    <div class="field"><label>Note</label><textarea id="noteText" placeholder="Yahan kuch bhi likho…">${n?esc(n.text):''}</textarea></div>
+    <button class="btn full" onclick="saveNote('${id||''}')">${n?'Save changes':'Add note'}</button>
+    ${n?`<button class="btn full ghost danger" style="margin-top:10px;color:var(--red)" onclick="delNote('${n.id}')">Delete note</button>`:''}
+  </div>`);
+}
+function saveNote(id){
+  const text=document.getElementById('noteText').value;
+  if(!text.trim()){toast('Kuch likho pehle');return;}
+  if(!state.notes)state.notes=[];
+  if(id){const n=state.notes.find(x=>x.id===id);n.text=text;n.updated=Date.now();}
+  else state.notes.push({id:uid(),text,updated:Date.now()});
+  closeModal();persist();render();toast(id?'Note updated':'Note added');
+}
+function delNote(id){
+  if(!confirm('Note delete karein?'))return;
+  state.notes=(state.notes||[]).filter(n=>n.id!==id);
+  closeModal();persist();render();toast('Note deleted');
+}
+
 function renderSettings(){
   renderCloudCard();
   const s=state.settings;
@@ -1255,6 +1336,7 @@ function commit(msg){recomputeDistributions();persist();render();if(msg)toast(ms
 function fabAction(){
   if(curPage==='members')memberForm();
   else if(curPage==='loans')loanForm();
+  else if(curPage==='notes')noteForm();
   else if(curPage==='ledger')go('loans')&&loanForm();
 }
 
@@ -1567,26 +1649,51 @@ async function cloudCheckSession(){
   if(curPage==='backup')renderSettings();
 }
 
-async function cloudAuth(signup){
-  if(!sb){toast('Pehle URL + key connect karo');return;}
-  const email=(document.getElementById('clEmail')||{}).value;
-  const pw=(document.getElementById('clPw')||{}).value;
-  if(!email||!pw){toast('Email aur password daalo');return;}
-  setBadge('sync');
+async function doAuth(email,pw,signup,fromGate){
+  const msg=(m)=>{const g=document.getElementById('gateMsg');if(fromGate&&g)g.textContent=m;else toast(m);};
+  if(!sb){msg('Internet chahiye');return;}
+  if(!email||!pw){msg('Email aur password daalo');return;}
+  setBadge('sync');if(fromGate)msg('Checking…');
   try{
     const res=signup?await sb.auth.signUp({email,password:pw})
                     :await sb.auth.signInWithPassword({email,password:pw});
-    if(res.error){toast(res.error.message);setBadge('login');return;}
+    if(res.error){msg(res.error.message);setBadge('login');return;}
     const session=res.data.session;
-    if(!session){toast('Account ban gaya — ab "Login" dabao');setBadge('login');renderSettings();return;}
+    if(!session){msg(signup?'Email pe confirmation link aaya — click karke phir Login karo':'Login fail');setBadge('login');return;}
     cloudUid=session.user.id;cloudEmail=session.user.email;
-    await cloudPull();setBadge('on');toast('Cloud connected ✓');renderSettings();
-  }catch(e){toast('Connect error — URL/key check karo');setBadge('offline');}
+    await cloudPull();onAuthed();
+  }catch(e){msg('Connect error — internet/keys check karo');setBadge('offline');}
+}
+function cloudAuth(signup){
+  doAuth((document.getElementById('clEmail')||{}).value,(document.getElementById('clPw')||{}).value,signup,false);
+}
+function gateAuth(signup){
+  doAuth((document.getElementById('gEmail')||{}).value,(document.getElementById('gPw')||{}).value,signup,true);
+}
+function onAuthed(){
+  setBadge('on');hideGate();go('dash');
+}
+function showGate(){const g=document.getElementById('authGate');if(g)g.classList.remove('hide');}
+function hideGate(){const g=document.getElementById('authGate');if(g)g.classList.add('hide');}
+
+async function cloudCheckSession(){
+  if(!sb)return;
+  try{
+    const {data}=await sb.auth.getSession();
+    if(data&&data.session){cloudUid=data.session.user.id;cloudEmail=data.session.user.email;
+      await cloudPull();onAuthed();}
+    else{setBadge('login');showGate();}
+  }catch(e){setBadge('offline');showGate();}
 }
 
 async function cloudLogout(){
   if(sb){try{await sb.auth.signOut();}catch(e){}}
-  cloudUid=null;cloudEmail=null;setBadge('login');renderSettings();toast('Logged out');
+  cloudUid=null;cloudEmail=null;
+  localStorage.removeItem(KEY); // wipe local cache so data isn't readable after logout
+  setBadge('login');
+  const ge=document.getElementById('gEmail'),gp=document.getElementById('gPw');
+  if(ge)ge.value='';if(gp)gp.value='';
+  showGate();toast('Logged out');
 }
 
 async function cloudPull(){
@@ -1660,6 +1767,7 @@ function renderCloudCard(){
 
 /* ---------- migration: remove old Feb-2026 seed data from saved state ---------- */
 function migrate(){
+  if(!Array.isArray(state.notes))state.notes=[]; // notes feature for older data
   if(state.version===2)return;
   // strip Feb 2026 loans
   if(Array.isArray(state.loans))state.loans=state.loans.filter(l=>l.start!=='2026-02');
@@ -1678,11 +1786,13 @@ function boot(){
   state=load();
   if(!state){state=seed();}
   migrate();
-  recomputeDistributions();persist();
+  recomputeDistributions();
   document.title=state.settings.name;
-  go('dash');
-  // cloud (optional): load local first for instant UI, then sync from cloud if logged in
-  if(initCloud())cloudCheckSession(); else setBadge('off');
+  // App stays behind the login gate until authenticated. Do NOT render data yet.
+  setBadge('login');
+  if(initCloud())cloudCheckSession();
+  else{setBadge('off');
+    const g=document.getElementById('gateMsg');if(g)g.textContent='Internet chahiye login ke liye';}
 }
 boot();
 
