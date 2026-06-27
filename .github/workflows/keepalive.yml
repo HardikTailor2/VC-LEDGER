@@ -1,0 +1,24 @@
+name: Keep Supabase Alive
+
+# Supabase free project 7 din inactivity pe pause hota hai.
+# Ye har Monday aur Thursday subah Supabase ko ek chhota ping bhejta hai,
+# taaki project hamesha "active" rahe aur kabhi pause na ho.
+
+on:
+  schedule:
+    - cron: "0 6 * * 1,4"   # Mon & Thu, 6:00 UTC (max gap ~4 din, 7 se kam)
+  workflow_dispatch:          # "Run workflow" button se manually bhi chala sakte ho
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase REST API
+        run: |
+          echo "Pinging Supabase to keep it awake..."
+          code=$(curl -s -o /dev/null -w "%{http_code}" \
+            "https://qggewliorelpxvxcvgyf.supabase.co/rest/v1/ledger?select=user_id&limit=1" \
+            -H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFnZ2V3bGlvcmVscHh2eGN2Z3lmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI0OTU2ODcsImV4cCI6MjA5ODA3MTY4N30.Wdh3xf-Oq5XzNmxkNx-TmmVwNQyghQoO_wBsLyS1f6k" \
+            -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFnZ2V3bGlvcmVscHh2eGN2Z3lmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI0OTU2ODcsImV4cCI6MjA5ODA3MTY4N30.Wdh3xf-Oq5XzNmxkNx-TmmVwNQyghQoO_wBsLyS1f6k")
+          echo "Response code: $code"
+          echo "Done - Supabase pinged."
