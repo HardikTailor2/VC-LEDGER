@@ -258,6 +258,39 @@ input,select{font-family:inherit;font-size:15px}
 .mini-stat-row .ms{flex:1;background:var(--beige);border-radius:10px;padding:10px 12px}
 .mini-stat-row .ms .k{font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
 .mini-stat-row .ms .v{font-family:Georgia,serif;font-size:19px;font-weight:600;margin-top:2px}
+
+/* ---------- Smart search ---------- */
+.search-head{display:flex;align-items:center;gap:10px;margin:2px 0 14px}
+.search-head .back{width:38px;height:38px;border-radius:10px;background:var(--panel);border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;font-size:24px;line-height:1;color:var(--ink);
+  box-shadow:var(--sh);flex-shrink:0;padding-bottom:3px}
+.search-head .back:active{background:var(--beige)}
+.search-head h2{font-size:19px}
+.search-bar{position:relative;margin-bottom:12px}
+.search-bar input{width:100%;padding:13px 42px 13px 42px;border:1px solid var(--line);border-radius:var(--r-sm);
+  background:var(--panel);color:var(--ink);outline:none;font-size:15px;box-shadow:var(--sh);transition:border .15s}
+.search-bar input:focus{border-color:var(--accent);background:#fff}
+.search-bar .si{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:15px;opacity:.5;pointer-events:none}
+.search-bar .sx{position:absolute;right:7px;top:50%;transform:translateY(-50%);width:28px;height:28px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:20px;line-height:1}
+.search-bar .sx:active{background:var(--beige)}
+.fchips{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:4px;-webkit-overflow-scrolling:touch}
+.fchips::-webkit-scrollbar{display:none}
+.fchip{flex-shrink:0;padding:7px 15px;border-radius:20px;background:var(--beige);color:var(--ink2);
+  font-size:13px;font-weight:600;border:1px solid transparent;white-space:nowrap;transition:transform .08s}
+.fchip.on{background:var(--accent-soft);color:var(--accent-d);border-color:#E8C9BB}
+.fchip:active{transform:scale(.95)}
+.sres-lbl{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);font-weight:600;
+  margin:18px 2px 9px;display:flex;justify-content:space-between;align-items:center}
+.sres-lbl .ct{color:var(--muted);font-weight:600;background:var(--beige);border-radius:20px;padding:1px 9px;letter-spacing:0}
+.smore{padding:12px 16px;text-align:center;color:var(--accent-d);font-size:12.5px;font-weight:600;
+  border-top:1px solid var(--line);cursor:pointer}
+.smore:active{background:var(--beige)}
+mark{background:var(--gold-soft);color:var(--ink);border-radius:3px;padding:0 1px;font-weight:600}
+.search-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:4px}
+.search-stats .st{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-sm);padding:11px 13px;box-shadow:var(--sh)}
+.search-stats .st .k{font-size:10.5px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted)}
+.search-stats .st .v{font-family:Georgia,serif;font-size:18px;font-weight:600;margin-top:3px}
 </style>
 </head>
 <body>
@@ -283,6 +316,7 @@ input,select{font-family:inherit;font-size:15px}
       <div class="sub" id="poolSub">Community Savings & Lending</div>
     </div>
     <div style="display:flex;gap:8px">
+      <button class="btn ghost sm" style="background:rgba(255,255,255,.16);color:#fff;border-color:rgba(255,255,255,.25)" onclick="openSearch()">🔍</button>
       <button class="btn ghost sm" id="cloudBadge" style="background:rgba(255,255,255,.16);color:#fff;border-color:rgba(255,255,255,.25)" onclick="go('backup')">☁︎ Local</button>
       <button class="btn ghost sm" style="background:rgba(255,255,255,.16);color:#fff;border-color:rgba(255,255,255,.25)" onclick="go('backup')">⚙︎</button>
     </div>
@@ -419,6 +453,23 @@ input,select{font-family:inherit;font-size:15px}
       <button class="btn full danger" onclick="resetAll()">Erase all data</button>
     </div>
     <div style="text-align:center;color:var(--muted);font-size:12px;padding:18px">VC Ledger · offline · v1.0</div>
+  </div>
+</div>
+
+<!-- ============ SEARCH ============ -->
+<div class="page" id="page-search">
+  <div class="wrap">
+    <div class="search-head">
+      <button class="back" onclick="searchBack()" aria-label="Back">‹</button>
+      <h2 class="serif">Smart Search</h2>
+    </div>
+    <div class="search-bar">
+      <span class="si">🔍</span>
+      <input id="searchInput" type="text" placeholder="Naam, amount, mahina ya status…" oninput="onSearchInput(this.value)" autocomplete="off">
+      <button class="sx" onclick="clearSearch()" aria-label="Clear">×</button>
+    </div>
+    <div class="fchips" id="searchChips"></div>
+    <div id="searchResults"></div>
   </div>
 </div>
 
@@ -869,6 +920,7 @@ function initials(name){const p=(name||'?').trim().split(/\s+/);return ((p[0]||'
 function todayMonth(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');}
 function addMonths(key,n){let[y,m]=key.split('-').map(Number);m+=n;y+=Math.floor((m-1)/12);m=((m-1)%12+12)%12+1;return y+'-'+String(m).padStart(2,'0');}
 function monthLabel(key){const[y,m]=key.split('-').map(Number);const names=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];return names[m-1]+' '+y;}
+function monthFull(key){const[y,m]=key.split('-').map(Number);const names=['January','February','March','April','May','June','July','August','September','October','November','December'];return names[m-1]+' '+y;}
 function monthCmp(a,b){return a<b?-1:a>b?1:0;}
 
 /* ---------- state ---------- */
@@ -1053,6 +1105,7 @@ function distByMonth(){
 let curPage='dash', memberFilter='active', loanFilter='active';
 let ledgerOpen=new Set();
 let ledgerEditMonth=null;
+let searchQuery='', searchFilter='all', searchReturn='dash', searchExpand={};
 
 function go(p){
   curPage=p;
@@ -1080,6 +1133,7 @@ function render(){
   if(curPage==='ledger')renderLedger();
   if(curPage==='profit')renderProfit();
   if(curPage==='notes')renderNotes();
+  if(curPage==='search')renderSearch();
   if(curPage==='backup')renderSettings();
 }
 
@@ -1324,6 +1378,149 @@ function renderSettings(){
   const rf=document.getElementById('rptFrom'),rt=document.getElementById('rptTo');
   if(rf&&!rf.value)rf.value=s.start;
   if(rt&&!rt.value)rt.value=currentMonth();
+}
+
+/* ============================================================
+   SMART SEARCH
+   ============================================================ */
+function openSearch(){
+  if(curPage!=='search')searchReturn=curPage;
+  go('search');
+  setTimeout(()=>{const i=document.getElementById('searchInput');if(i){i.value=searchQuery;i.focus();}},60);
+}
+function searchBack(){go(searchReturn||'dash');}
+function onSearchInput(v){searchQuery=v;searchExpand={};renderSearch();}
+function clearSearch(){searchQuery='';searchExpand={};const i=document.getElementById('searchInput');if(i){i.value='';i.focus();}renderSearch();}
+function setSearchFilter(f){searchFilter=f;searchExpand={};renderSearch();}
+function expandSearch(cat){searchExpand[cat]=true;renderSearch();}
+function openLedgerMonth(key){ledgerOpen=new Set([key]);go('ledger');}
+function hl(text,q){
+  text=esc(String(text));
+  if(!q)return text;
+  const i=text.toLowerCase().indexOf(q.toLowerCase());
+  if(i<0)return text;
+  return text.slice(0,i)+'<mark>'+text.slice(i,i+q.length)+'</mark>'+text.slice(i+q.length);
+}
+
+function renderSearch(){
+  const chips=[['all','Sab'],['members','Members'],['loans','Loans'],['months','Mahine'],['profit','Profit']];
+  const chipBox=document.getElementById('searchChips');
+  if(chipBox)chipBox.innerHTML=chips.map(c=>`<button class="fchip ${searchFilter===c[0]?'on':''}" onclick="setSearchFilter('${c[0]}')">${c[1]}</button>`).join('');
+  const box=document.getElementById('searchResults');
+  if(!box)return;
+
+  const q=searchQuery.trim().toLowerCase();
+  const m=(t)=>q===''||String(t).toLowerCase().includes(q);
+  const F=searchFilter;
+  const cm=currentMonth();
+  const sectionCap=(F==='all')?6:99999;
+  let totalCount=0,html='';
+
+  const section=(cat,label,rows)=>{
+    if(!rows.length)return '';
+    totalCount+=rows.length;
+    const expanded=searchExpand[cat]||F!=='all';
+    const shown=expanded?rows:rows.slice(0,sectionCap);
+    const more=rows.length-shown.length;
+    return `<div class="sres-lbl">${label}<span class="ct">${rows.length}</span></div>
+      <div class="card">${shown.join('')}
+      ${more>0?`<div class="smore" onclick="expandSearch('${cat}')">+${more} aur dikhao →</div>`:''}</div>`;
+  };
+
+  /* quick pool stats — empty query or stats keywords */
+  const showStats=F==='all'&&(q===''||['total','balance','summary','stats','pool','overview','cash','capital','profit','outstanding'].some(w=>q.includes(w)));
+  if(showStats){
+    html+=`<div class="search-stats">
+      <div class="st"><div class="k">Members' capital</div><div class="v">${money(poolCapital())}</div></div>
+      <div class="st"><div class="k">Cash in hand</div><div class="v">${money(currentBalance())}</div></div>
+      <div class="st"><div class="k">Outstanding</div><div class="v">${money(totalOutstanding())}</div></div>
+      <div class="st"><div class="k">Profit baata</div><div class="v">${money(totalProfitDistributed())}</div></div>
+    </div>`;
+  }
+
+  /* MEMBERS */
+  if(F==='all'||F==='members'){
+    const totalSh=totalActiveShares();
+    const rows=state.members.filter(mm=>{
+      const txt=mm.name+' member '+mm.shares+' share shares '+mm.status+' '+money(memberCapital(mm));
+      return m(txt);
+    }).sort((a,b)=>memberCapital(b)-memberCapital(a)).map(mm=>{
+      const cap=memberCapital(mm),earned=memberProfitTotal(mm.id);
+      const pct=(mm.status==='active'&&totalSh)?Math.round((+mm.shares/totalSh)*100):0;
+      return `<div class="lrow tap" onclick="openMember('${mm.id}')">
+        <div class="av">${initials(mm.name)}</div>
+        <div class="mn"><div class="nm">${hl(mm.name,q)}</div>
+          <div class="ds"><span class="chip sh">${mm.shares} share${mm.shares>1?'s':''}</span>${mm.status==='active'?' · '+pct+'% pool':' · exited'+(mm.exitMonth?' '+monthLabel(mm.exitMonth):'')}</div></div>
+        <div class="rt"><div class="big">${money(cap)}</div><div class="sm">${earned>0?'+'+money(earned)+' profit':'capital'}</div></div>
+      </div>`;
+    });
+    html+=section('members','Members',rows);
+  }
+
+  /* LOANS */
+  if(F==='all'||F==='loans'){
+    const rows=state.loans.filter(l=>{
+      const overdue=l.installments.some(i=>!i.paid&&i.due<cm);
+      const txt=l.borrower+' loan '+l.gross+' '+money(l.gross)+' '+monthLabel(l.start)+' '+monthFull(l.start)+' '+l.start+' '+l.status
+        +(l.status==='active'?' running active pending baaki':' completed done paid pura')+(overdue?' overdue late':'');
+      return m(txt);
+    }).sort((a,b)=>monthCmp(b.start,a.start)).map(l=>{
+      const paid=l.installments.filter(i=>i.paid).length;
+      return `<div class="lrow tap" onclick="openLoan('${l.id}')">
+        <div class="av">${initials(l.borrower)}</div>
+        <div class="mn"><div class="nm">${hl(l.borrower,q)}</div>
+          <div class="ds">${paid}/${l.inst} kishtein · gross ${money(l.gross)} · ${monthLabel(l.start)}</div></div>
+        <div class="rt"><div class="big">${money(l.gross)}</div><div class="sm">${l.status==='completed'?'<span class="chip done">done</span>':money(loanOutstanding(l))+' baaki'}</div></div>
+      </div>`;
+    });
+    html+=section('loans','Loans',rows);
+  }
+
+  /* MONTHS (ledger) */
+  if(F==='all'||F==='months'){
+    const rows=buildLedger().slice().reverse().filter(r=>{
+      const txt=monthLabel(r.key)+' '+monthFull(r.key)+' '+r.key+' month '+(r.isHistory?'history':'')+' aavak '+money(r.aavak)+' shesh balance '+money(r.close)+' jaavak '+money(r.jaavak);
+      return m(txt);
+    }).map(r=>`<div class="lrow tap" onclick="openLedgerMonth('${r.key}')">
+        <div class="av" style="background:var(--blue-soft);color:var(--blue)">📅</div>
+        <div class="mn"><div class="nm">${hl(monthLabel(r.key),q)} ${r.isHistory?'<span class="chip exited" style="vertical-align:middle">history</span>':(r.key===cm?'<span class="chip open" style="vertical-align:middle">current</span>':'')}</div>
+          <div class="ds">aavak ${money(r.aavak)} · ${r.aOut.length} naye loan</div></div>
+        <div class="rt"><div class="big">${money(r.close)}</div><div class="sm">shesh</div></div>
+      </div>`);
+    html+=section('months','Mahine',rows);
+  }
+
+  /* PROFIT */
+  if(F==='all'||F==='profit'){
+    const rows=distByMonth().filter(d=>{
+      const names=Object.values(d.allocs).map(a=>a.name).join(' ');
+      const txt=monthLabel(d.monthKey)+' '+monthFull(d.monthKey)+' '+d.monthKey+' profit '+money(d.profit)+' '+d.loans.join(' ')+' '+names;
+      return m(txt);
+    }).map(d=>`<div class="lrow tap" onclick="go('profit')">
+        <div class="av" style="background:var(--green-soft);color:var(--green)">🪙</div>
+        <div class="mn"><div class="nm">${hl(monthLabel(d.monthKey),q)}</div>
+          <div class="ds">${d.loans.length} loan complete · ${d.shares} shares</div></div>
+        <div class="rt"><div class="big" style="color:var(--green)">+${money(d.profit)}</div><div class="sm">${money(round3(d.profit/(d.shares||1)))}/sh</div></div>
+      </div>`);
+    html+=section('profit','Profit splits',rows);
+  }
+
+  /* EXITS (cash-book) */
+  if(F==='all'&&state.exits&&state.exits.length){
+    const rows=state.exits.filter(e=>m(e.name+' exit '+monthLabel(e.monthKey)+' '+money(e.amount)))
+      .map(e=>`<div class="lrow ${e.memberId?'tap':''}" ${e.memberId?`onclick="openMember('${e.memberId}')"`:''}>
+        <div class="av" style="background:var(--red-soft);color:var(--red)">⤴</div>
+        <div class="mn"><div class="nm">${hl(e.name,q)}</div>
+          <div class="ds">exit · ${monthLabel(e.monthKey)}</div></div>
+        <div class="rt"><div class="big" style="color:var(--red)">−${money(e.amount)}</div><div class="sm">withdrawn</div></div>
+      </div>`);
+    html+=section('exits','Exits',rows);
+  }
+
+  if(totalCount===0&&!showStats){
+    html+=`<div class="empty"><div class="ic">🔍</div><p>${q?'Kuch nahi mila "'+esc(searchQuery)+'" ke liye':'Naam, amount, mahina ya status type karo'}</p>${q?'<p style="font-size:12.5px">Spelling check karo ya filter badlo</p>':'<p style="font-size:12.5px">Jaise: Aashish · 500 · March · pending · overdue · total</p>'}</div>`;
+  }
+  box.innerHTML=html;
 }
 
 /* ============================================================
