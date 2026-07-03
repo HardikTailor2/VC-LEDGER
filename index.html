@@ -252,6 +252,19 @@ input,select{font-family:inherit;font-size:15px}
   padding:10px 16px;background:var(--beige);border-top:1px solid var(--line)}
 .edit-hint{font-size:12px;color:var(--accent-d);font-weight:600}
 .edit-hint.locked-hint{color:var(--muted)}
+.sel-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:10px 16px;background:var(--beige);border-top:1px solid var(--line)}
+.coll-row.sel-on{cursor:pointer}
+.coll-row.sel-on.sel{background:var(--accent-soft)}
+.coll-row.sel-on .ck.sel-ck{border-color:var(--accent)}
+.coll-row.sel-on.sel .ck.sel-ck{background:var(--accent);border-color:var(--accent);color:#fff}
+.export-bar{position:fixed;left:0;right:0;bottom:0;z-index:55;background:var(--panel);
+  border-top:1px solid var(--line);box-shadow:0 -2px 12px rgba(38,36,31,.1);
+  padding:12px 16px calc(12px + env(safe-area-inset-bottom));display:flex;align-items:center;
+  justify-content:space-between;gap:12px;animation:slideup .2s cubic-bezier(.2,.8,.2,1)}
+.export-bar .cnt{font-size:13.5px;font-weight:600;color:var(--ink)}
+.export-bar .cnt small{display:block;font-size:11px;color:var(--muted);font-weight:400}
+.export-bar .acts{display:flex;gap:8px}
 .led-sub{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);
   padding:14px 16px 2px;font-weight:600}
 .mini-stat-row{display:flex;gap:10px;margin-bottom:4px}
@@ -384,6 +397,7 @@ mark{background:var(--gold-soft);color:var(--ink);border-radius:3px;padding:0 1p
     <div class="note-line">Har mahine ki <span class="kbd">collection</span>: pichle mahino ke loans ki jo kishtein is mahine aani hai, sab yahan dikhti hai. Aane pe tick karo — aavak, shesh aur profit khud update ho jaayega.</div>
     <div id="ledgerList"></div>
   </div>
+  <div id="ledgerExportBar"></div>
 </div>
 
 <!-- ============ PROFIT ============ -->
@@ -1105,6 +1119,8 @@ function distByMonth(){
 let curPage='dash', memberFilter='active', loanFilter='active';
 let ledgerOpen=new Set();
 let ledgerEditMonth=null;
+let ledgerSelectMonth=null;
+let ledgerSelections=new Set();
 let searchQuery='', searchFilter='all', searchReturn='dash', searchExpand={};
 
 function go(p){
@@ -1237,15 +1253,34 @@ function renderLoans(){
   }).join('');
 }
 
+function dueRowKey(d){return d.loanId+'-'+d.n;}
+function dueRowHtml(d,selMode,editing){
+  if(selMode){
+    const sel=ledgerSelections.has(dueRowKey(d));
+    return `<div class="coll-row sel-on ${sel?'sel':''}" onclick="toggleSelectItem('${dueRowKey(d)}')">
+      <div class="ck sel-ck">${sel?'✓':''}</div>
+      <div class="ci"><div class="cn">${esc(d.borrower)}</div>
+        <div class="cs">Kisht ${d.n}/${d.inst} · loan ${monthLabel(d.fromMonth)}${d.paid?' · paid':''}</div></div>
+      <div class="ca">${money(d.amount)}</div>
+    </div>`;
+  }
+  return `<div class="coll-row ${d.paid?'done':''} ${editing?'editing':'locked'}" ${editing?`onclick="togInst('${d.loanId}',${d.n})"`:''}>
+      <div class="ck">${d.paid?'✓':(editing?'':'·')}</div>
+      <div class="ci"><div class="cn">${esc(d.borrower)}</div>
+        <div class="cs">Kisht ${d.n}/${d.inst} · loan ${monthLabel(d.fromMonth)}</div></div>
+      <div class="ca">${money(d.amount)}</div>
+    </div>`;
+}
 function renderLedger(){
   const list=document.getElementById('ledgerList');
   const rows=buildLedger().reverse();
-  if(!rows.length){list.innerHTML='<div class="empty"><div class="ic">📅</div><p>No months yet</p></div>';return;}
+  if(!rows.length){list.innerHTML='<div class="empty"><div class="ic">📅</div><p>No months yet</p></div>';document.getElementById('ledgerExportBar').innerHTML='';return;}
   if(ledgerOpen.size===0)ledgerOpen.add(currentMonth()); // current working month open by default
   list.innerHTML=rows.map(r=>{
     const id='led'+r.key.replace('-','');
     const open=ledgerOpen.has(r.key);
     const pending=r.dueList.filter(d=>!d.paid).length;
+    const selMode=(ledgerSelectMonth===r.key);
     const loansBlock=r.aOut.length?`<div class="led-sub">Naye loan diye (jaavak)</div>
         <div class="coll-list">${r.aOut.map(a=>`<div class="coll-row" style="cursor:default"><div class="ck out">↑</div><div class="ci"><div class="cn">${esc(a.nm)}</div></div><div class="ca" style="color:var(--red)">−${money(a.amt)}</div></div>`).join('')}</div>`:'';
     const exitsBlock=r.aEx.length?`<div class="led-sub">Member exits</div>
@@ -1258,25 +1293,26 @@ function renderLedger(){
         <div class="fr tot"><span>Mahine ka shesh</span><span class="v">${money(r.close)}</span></div>
       </div>`;
     const distBlock=r.dists.length?`<div class="divider-note" style="margin:0 12px 12px">🪙 Profit baata: ${r.dists.map(d=>esc(d.borrower)+' '+money(d.profit)).join(' · ')} = <b>${money(round3(r.dists.reduce((s,d)=>s+d.profit,0)))}</b></div>`:'';
+    const selBar=`<div class="sel-bar">
+        ${selMode
+          ? `<span class="edit-hint">☑️ ${ledgerSelections.size} member${ledgerSelections.size===1?'':'s'} select kiye</span><button class="btn sm ghost" onclick="toggleSelectMode('${r.key}')">✕ Cancel</button>`
+          : `<span class="edit-hint locked-hint">☑️ Members select karke unka loan data export karo</span><button class="btn sm ghost" onclick="toggleSelectMode('${r.key}')">☑ Select</button>`}
+      </div>`;
 
     let body;
     if(r.isHistory){
-      body=`${loansBlock}${exitsBlock}${flowBlock}${distBlock}`;
+      const selBlock=selMode?`<div class="coll-head"><div class="lbl">Kishtein — select karo</div></div>
+        <div class="coll-list">${r.dueList.length?r.dueList.map(d=>dueRowHtml(d,true,false)).join(''):'<div style="padding:16px;color:var(--muted);text-align:center;font-size:13px">Is mahine koi kisht due nahi</div>'}</div>`:'';
+      body=`${selBar}${selBlock}${loansBlock}${exitsBlock}${flowBlock}${distBlock}`;
     }else{
-      const editing=(ledgerEditMonth===r.key);
-      const coll=r.dueList.map(d=>`
-        <div class="coll-row ${d.paid?'done':''} ${editing?'editing':'locked'}" ${editing?`onclick="togInst('${d.loanId}',${d.n})"`:''}>
-          <div class="ck">${d.paid?'✓':(editing?'':'·')}</div>
-          <div class="ci"><div class="cn">${esc(d.borrower)}</div>
-            <div class="cs">Kisht ${d.n}/${d.inst} · loan ${monthLabel(d.fromMonth)}</div></div>
-          <div class="ca">${money(d.amount)}</div>
-        </div>`).join('');
-      const editBar=`<div class="edit-bar">
+      const editing=(ledgerEditMonth===r.key)&&!selMode;
+      const coll=r.dueList.map(d=>dueRowHtml(d,selMode,editing)).join('');
+      const editBar=selMode?'':`<div class="edit-bar">
         ${editing
           ? `<span class="edit-hint">✏️ Edit mode — kishtein tick karo</span><button class="btn sm" onclick="toggleEdit('${r.key}')">✓ Save</button>`
           : `<span class="edit-hint locked-hint">🔒 Locked — galti se touch safe</span><button class="btn sm ghost" onclick="toggleEdit('${r.key}')">✎ Edit</button>`}
       </div>`;
-      body=`<div class="coll-head"><div><div class="lbl">Aane wali kishtein (collection)</div>
+      body=`${selBar}<div class="coll-head"><div><div class="lbl">Aane wali kishtein (collection)</div>
           <div class="coll-sum"><b style="color:var(--green)">${money(r.aavak)}</b> collected <span style="color:var(--muted)">/ ${money(r.expected)} expected</span></div></div></div>
         ${editBar}
         <div class="coll-list">${coll||'<div style="padding:16px;color:var(--muted);text-align:center;font-size:13px">Is mahine koi kisht due nahi</div>'}</div>
@@ -1289,9 +1325,132 @@ function renderLedger(){
         <div class="cl">${money(r.close)}<small>shesh</small></div>
       </div>
       <div id="${id}" style="display:${open?'block':'none'}">${body}</div></div>`;}).join('');
+  renderExportBar();
+}
+function renderExportBar(){
+  const bar=document.getElementById('ledgerExportBar');
+  if(!bar)return;
+  if(!ledgerSelectMonth||ledgerSelections.size===0){bar.innerHTML='';return;}
+  bar.innerHTML=`<div class="export-bar">
+      <div class="cnt">${ledgerSelections.size} select kiye<small>${monthLabel(ledgerSelectMonth)}</small></div>
+      <div class="acts">
+        <button class="btn sm ghost" onclick="openExportChoice()">⬇︎ Export</button>
+      </div>
+    </div>`;
 }
 function toggleLed(id){const el=document.getElementById(id);el.style.display=el.style.display==='none'?'block':'none';}
 function toggleMonth(key){if(ledgerOpen.has(key))ledgerOpen.delete(key);else ledgerOpen.add(key);renderLedger();}
+function toggleSelectMode(key){
+  if(ledgerSelectMonth===key){ledgerSelectMonth=null;ledgerSelections=new Set();}
+  else{ledgerSelectMonth=key;ledgerSelections=new Set();ledgerOpen.add(key);ledgerEditMonth=null;}
+  renderLedger();
+}
+function toggleSelectItem(skey){
+  if(ledgerSelections.has(skey))ledgerSelections.delete(skey);else ledgerSelections.add(skey);
+  renderLedger();
+}
+function selectedLoanRows(){
+  if(!ledgerSelectMonth)return [];
+  const r=buildLedger().find(x=>x.key===ledgerSelectMonth);
+  if(!r)return [];
+  return r.dueList.filter(d=>ledgerSelections.has(dueRowKey(d)));
+}
+function openExportChoice(){
+  if(!ledgerSelections.size){toast('Pehle members select karo');return;}
+  openModal(`<div class="modal-head"><h2>Export selected (${ledgerSelections.size})</h2><span class="x" onclick="closeModal()">×</span></div>
+    <div class="modal-body">
+      <p style="margin:0 0 14px;color:var(--ink2);font-size:13.5px">${monthLabel(ledgerSelectMonth)} ke selected members ka loan data. Format choose karo:</p>
+      <button class="btn full" style="margin-bottom:10px" onclick="closeModal();exportSelectedPDF()">📄 Export as PDF</button>
+      <button class="btn full ghost" onclick="closeModal();exportSelectedImage()">🖼️ Export as Image (PNG)</button>
+    </div>`);
+}
+function exportSelectedPDF(){
+  const key=ledgerSelectMonth;
+  const items=selectedLoanRows();
+  if(!items.length){toast('Kuch select nahi hua');return;}
+  if(!window.jspdf||!window.jspdf.jsPDF){toast('PDF engine load nahi hua');return;}
+  const {jsPDF}=window.jspdf;
+  const doc=new jsPDF({unit:'pt',format:'a4'});
+  const W=doc.internal.pageSize.getWidth(),M=40;
+  const accent=[201,100,66],ink=[38,36,31],muted=[146,140,126],green=[91,122,86];
+  let y=46;
+  doc.setFont('helvetica','bold');doc.setFontSize(18);doc.setTextColor(...accent);
+  doc.text(state.settings.name||'VC Ledger',M,y);y+=18;
+  doc.setFont('helvetica','normal');doc.setFontSize(10);doc.setTextColor(...muted);
+  doc.text(`Selected loan data — ${monthLabel(key)}   |   generated ${new Date().toLocaleDateString('en-GB')}`,M,y);y+=22;
+  doc.autoTable({startY:y,margin:{left:M,right:M},
+    head:[['Borrower','Kisht','Loan month','Amount','Status']],
+    body:items.map(d=>[d.borrower,d.n+'/'+d.inst,monthLabel(d.fromMonth),money(d.amount)+' '+state.settings.cur,d.paid?'Paid':'Pending']),
+    theme:'striped',headStyles:{fillColor:accent,textColor:255,fontStyle:'bold'},
+    styles:{fontSize:10,cellPadding:5},
+    columnStyles:{3:{halign:'right'},4:{halign:'center'}},
+    didParseCell:(d2)=>{if(d2.section==='body'&&d2.column.index===4){d2.cell.styles.textColor=d2.cell.raw==='Paid'?green:accent;d2.cell.styles.fontStyle='bold';}}});
+  const y2=doc.lastAutoTable.finalY+18;
+  const total=round3(items.reduce((s,d)=>s+d.amount,0));
+  doc.setFont('helvetica','bold');doc.setFontSize(12);doc.setTextColor(...ink);
+  doc.text(`Total: ${money(total)} ${state.settings.cur}`,M,y2);
+  const pages=doc.internal.getNumberOfPages();
+  for(let i=1;i<=pages;i++){doc.setPage(i);doc.setFontSize(8);doc.setTextColor(...muted);
+    doc.text(`VC Ledger  ·  ${state.settings.cur}  ·  page ${i}/${pages}`,W/2,doc.internal.pageSize.getHeight()-18,{align:'center'});}
+  try{doc.save(`VC-Ledger_${key}_selected.pdf`);toast('PDF download ho gaya');}catch(e){toast('PDF save error');}
+}
+function exportSelectedImage(){
+  const key=ledgerSelectMonth;
+  const items=selectedLoanRows();
+  if(!items.length){toast('Kuch select nahi hua');return;}
+  const W=760,rowH=56,headH=112,footH=64;
+  const H=headH+items.length*rowH+footH;
+  const scale=2;
+  const canvas=document.createElement('canvas');
+  canvas.width=W*scale;canvas.height=H*scale;
+  const ctx=canvas.getContext('2d');
+  ctx.scale(scale,scale);
+  ctx.fillStyle='#FAF9F5';ctx.fillRect(0,0,W,H);
+  ctx.fillStyle='#C96442';ctx.fillRect(0,0,W,headH);
+  ctx.fillStyle='#FFFFFF';
+  ctx.font='700 20px Georgia, "Times New Roman", serif';
+  ctx.fillText(state.settings.name||'VC Ledger',24,42);
+  ctx.font='400 13px -apple-system, Helvetica, Arial, sans-serif';
+  ctx.fillText(`Selected loan data — ${monthLabel(key)}`,24,66);
+  ctx.font='400 11px -apple-system, Helvetica, Arial, sans-serif';
+  ctx.globalAlpha=.85;
+  ctx.fillText(`Generated ${new Date().toLocaleDateString('en-GB')} · ${items.length} member${items.length>1?'s':''}`,24,86);
+  ctx.globalAlpha=1;
+  let y=headH;
+  items.forEach((d,i)=>{
+    ctx.fillStyle=i%2===0?'#FFFFFF':'#F0EEE6';
+    ctx.fillRect(0,y,W,rowH);
+    ctx.fillStyle='#26241F';
+    ctx.font='700 15px Georgia, "Times New Roman", serif';
+    ctx.fillText(esc(d.borrower),24,y+24);
+    ctx.font='400 12px -apple-system, Helvetica, Arial, sans-serif';
+    ctx.fillStyle='#6B665C';
+    ctx.fillText(`Kisht ${d.n}/${d.inst} · loan ${monthLabel(d.fromMonth)}`,24,y+42);
+    ctx.textAlign='right';
+    ctx.font='700 15px Georgia, "Times New Roman", serif';
+    ctx.fillStyle='#26241F';
+    ctx.fillText(money(d.amount)+' '+state.settings.cur,W-24,y+26);
+    ctx.font='700 11px -apple-system, Helvetica, Arial, sans-serif';
+    ctx.fillStyle=d.paid?'#5B7A56':'#C96442';
+    ctx.fillText(d.paid?'PAID':'PENDING',W-24,y+44);
+    ctx.textAlign='left';
+    y+=rowH;
+  });
+  ctx.fillStyle='#F0EEE6';ctx.fillRect(0,y,W,footH);
+  const total=round3(items.reduce((s,d)=>s+d.amount,0));
+  ctx.fillStyle='#26241F';
+  ctx.font='700 18px Georgia, "Times New Roman", serif';
+  ctx.textAlign='right';
+  ctx.fillText(`Total: ${money(total)} ${state.settings.cur}`,W-24,y+38);
+  ctx.textAlign='left';
+  try{
+    const url=canvas.toDataURL('image/png',1);
+    const a=document.createElement('a');
+    a.href=url;a.download=`VC-Ledger_${key}_selected.png`;
+    document.body.appendChild(a);a.click();a.remove();
+    toast('Image download ho gayi');
+  }catch(e){toast('Image save error');}
+}
 function toggleEdit(key){
   if(ledgerEditMonth===key){ledgerEditMonth=null;toast('Saved ✓');}
   else{ledgerEditMonth=key;ledgerOpen.add(key);}
