@@ -1799,10 +1799,10 @@ function loanForm(id){
   g.oninput=upd;upd();
 }
 function openLoan(id){loanDetail(id);}
-function loanDetail(id){
+function loanDetail(id,editing){
   const l=state.loans.find(x=>x.id===id);if(!l)return;
   const rows=l.installments.map(i=>`
-    <div class="coll-row ${i.paid?'done':''}" onclick="togInst('${l.id}',${i.n});loanDetail('${l.id}')">
+    <div class="coll-row ${i.paid?'done':''} ${editing?'editing':'locked'}" ${editing?`onclick="togInst('${l.id}',${i.n});loanDetail('${l.id}',true)"`:''}>
       <div class="ck">${i.paid?'✓':i.n}</div>
       <div class="ci"><div class="cn">Kisht ${i.n}</div>
         <div class="cs">${monthLabel(i.due)}${i.paid&&i.paidMonth?' · received '+monthLabel(i.paidMonth):' · pending'}</div></div>
@@ -1816,7 +1816,11 @@ function loanDetail(id){
       <div class="ln"><span>Status</span><b>${l.status==='completed'?'Completed ✓':money(loanOutstanding(l))+' baaki'}</b></div>
       <div class="ln hi"><span>Profit (on completion)</span><b>${money(profitOf(l))}</b></div>
     </div>
-    <label style="display:block;font-size:12.5px;font-weight:600;color:var(--ink2);margin-bottom:8px">Kishtein — tap to mark received</label>
+    <div class="sel-bar" style="margin-bottom:8px">
+      ${editing
+        ? `<span class="edit-hint">✏️ Edit mode on — kisht tap karke tick/untick karo</span><button class="btn sm ghost" onclick="loanDetail('${l.id}')">✓ Done</button>`
+        : `<span class="edit-hint locked-hint">🔒 Kishtein locked hain — tick karne ke liye Edit dabao</span><button class="btn sm ghost" onclick="loanDetail('${l.id}',true)">✏️ Edit</button>`}
+    </div>
     <div class="coll-list" style="border:1px solid var(--line);border-radius:10px;margin-bottom:16px">${rows}</div>
     <div class="note-line">Aakhri kisht mark karte hi profit us mahine sabhi active members me baat jaayega.</div>
     <button class="btn full ghost" onclick="loanForm('${l.id}')">Edit loan details</button>
