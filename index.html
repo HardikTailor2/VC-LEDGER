@@ -1823,7 +1823,10 @@ function loanDetail(id,editing){
     </div>
     <div class="coll-list" style="border:1px solid var(--line);border-radius:10px;margin-bottom:16px">${rows}</div>
     <div class="note-line">Aakhri kisht mark karte hi profit us mahine sabhi active members me baat jaayega.</div>
-    <button class="btn full ghost" onclick="loanForm('${l.id}')">Edit loan details</button>
+    <div style="display:flex;gap:10px">
+      <button class="btn ghost" style="flex:1" onclick="loanForm('${l.id}')">✏️ Edit</button>
+      <button class="btn ghost" style="flex:1;color:var(--red);border-color:var(--red)" onclick="delLoan('${l.id}')">🗑️ Delete</button>
+    </div>
   </div>`);
 }
 function saveLoan(id){
