@@ -370,7 +370,6 @@ h1,h2,h3,.serif{font-family:var(--glass-serif);font-weight:400}button,input,sele
       <button id="mSegA" class="on" onclick="setMemberFilter('active')">Active</button>
       <button id="mSegE" onclick="setMemberFilter('exited')">Exited</button>
     </div>
-    <div class="note-line">Profit har month <span class="kbd">active shareholders</span> me unke share ke ratio se exact (3 decimal) baat-ta hai. No rounding.</div>
     <div id="membersList"></div>
   </div>
 </div>
@@ -383,7 +382,6 @@ h1,h2,h3,.serif{font-family:var(--glass-serif);font-weight:400}button,input,sele
       <button id="lSegA" class="on" onclick="setLoanFilter('active')">Running</button>
       <button id="lSegC" onclick="setLoanFilter('completed')">Completed</button>
     </div>
-    <div class="note-line">Loan pe <span class="kbd">5% upfront</span> kat-ta hai, 4 kishton me wapsi. Kisht aane pe Ledger tab me ya loan kholke tick karo. 4th kisht pe profit us mahine distribute.</div>
     <div id="loansList"></div>
   </div>
 </div>
@@ -392,7 +390,6 @@ h1,h2,h3,.serif{font-family:var(--glass-serif);font-weight:400}button,input,sele
 <div class="page" id="page-ledger">
   <div class="wrap">
     <div class="glass-page-head"><div><div class="glass-eyebrow">शुभ लाभ / <span data-glass-month></span></div><h2>Ledger</h2><p>Har mahine ka poora hisaab.</p></div><button class="glass-add" onclick="loanForm()" aria-label="Add loan"><svg class="glass-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button></div>
-    <div class="note-line">Har mahine ki <span class="kbd">collection</span>: pichle mahino ke loans ki jo kishtein is mahine aani hai, sab yahan dikhti hai. Aane pe tick karo — aavak, shesh aur profit khud update ho jaayega.</div>
     <div id="ledgerList"></div>
   </div>
   <div id="ledgerExportBar"></div>
@@ -413,7 +410,6 @@ h1,h2,h3,.serif{font-family:var(--glass-serif);font-weight:400}button,input,sele
 <div class="page" id="page-notes">
   <div class="wrap">
     <div class="glass-page-head"><div><div class="glass-eyebrow">शुभ लाभ / <span data-glass-month></span></div><h2>Notes</h2><p>The little details worth keeping.</p></div><button class="glass-add" onclick="noteForm()" aria-label="Add note"><svg class="glass-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button></div>
-    <div class="note-line">Yahan koi bhi extra information likh sakte ho — reminders, hisaab ke notes, members ki detail, kuch bhi. Cloud me save rehta hai.</div>
     <div id="notesList"></div>
   </div>
 </div>
