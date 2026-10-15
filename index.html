@@ -488,18 +488,106 @@ button:focus-visible,[tabindex]:focus-visible,summary:focus-visible,input:focus-
 }
 
 </style>
+<style id="home-hero-month-theme">
+/* Four equal hero cards replace the single balance hero. */
+.hero-overview-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:17px 1px 14px}
+.hero-overview-head h2{margin:0;font-family:var(--app-sans);font-size:17px;letter-spacing:-.3px;font-weight:750;color:#4b2418}
+.hero-overview-head>span{font-size:11px;font-weight:650;color:#643d27;letter-spacing:.2px}
+.home-pool-meta{font-family:var(--app-sans);font-size:11px;font-weight:600;letter-spacing:0;color:#633b25;white-space:nowrap}
+.hero-overview{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:6px}
+.hero-card{position:relative;isolation:isolate;overflow:hidden;min-width:0;min-height:174px;padding:17px 16px 14px;border:1px solid #fff3d6d9;border-radius:27px;display:flex;flex-direction:column;backdrop-filter:blur(24px) saturate(145%);-webkit-backdrop-filter:blur(24px) saturate(145%);box-shadow:inset 2px 3px 3px #fff4d687,inset -3px -4px 7px #884b2933,0 9px 20px #964e2424}
+.hero-card:before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(130deg,#fff8d724,transparent 42%,transparent 70%,#fff4cb1f)}
+.hero-card:after{content:'';position:absolute;width:130px;height:130px;right:-72px;top:28px;border:1px solid currentColor;border-radius:50%;box-shadow:0 0 0 15px #fff6d916,0 0 0 31px #fff6d90c;opacity:.2;z-index:-1;pointer-events:none}
+.hero-card.capital{background:linear-gradient(132deg,rgba(151,38,55,.93),rgba(102,19,40,.96));color:#fff6de;border-color:#ffd4b3b8;box-shadow:inset 2px 3px 3px #ffcdb08c,inset -3px -4px 7px #50152e66,0 9px 21px #7f263732}
+.hero-card.cash{background:linear-gradient(128deg,rgba(255,195,63,.88),rgba(255,139,30,.78) 62%,rgba(255,106,28,.73));color:#4e1b08;border-color:#fff4d5;box-shadow:inset 2px 3px 3px #fff3c8e6,inset -3px -4px 7px #bc682c40,0 9px 21px #bc642c2e}
+.hero-card.outstanding{background:linear-gradient(135deg,rgba(255,225,153,.89),rgba(236,179,64,.8));color:#502b0e;border-color:#fff5d1;box-shadow:inset 2px 3px 3px #fff7d8e0,inset -3px -4px 7px #a8772e3d,0 9px 21px #ab7b3029}
+.hero-card.profit{background:linear-gradient(140deg,rgba(21,91,64,.95),rgba(10,64,46,.96));color:#fff8db;border-color:#edf1bda6;box-shadow:inset 2px 3px 3px #e4efbd80,inset -3px -4px 7px #103b2b66,0 9px 21px #325c342b}
+.hero-card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;min-height:36px}
+.hero-card h3{font-family:var(--app-sans);font-size:12px;font-weight:650;line-height:1.45;letter-spacing:.05px;color:inherit;margin:0;position:relative;z-index:1}
+.hero-card-icon{display:grid;place-items:center;flex-shrink:0;width:33px;height:34px;border:1px solid #fff3d05e;border-radius:12px;background:linear-gradient(145deg,#fff2cb3b,#fff1c51a);box-shadow:inset 1px 2px 2px #fff4d670,inset -2px -2px 3px #421f202e,2px 4px 8px #391b1724}
+.hero-card-icon svg{width:18px;height:18px;stroke-width:1.9}
+.hero-card.cash .hero-card-icon,.hero-card.outstanding .hero-card-icon{background:linear-gradient(140deg,#fff0bbbf,#ffd27c70);border-color:#fff5d5c9;box-shadow:inset 1px 2px 2px #fff7d8c2,inset -2px -2px 3px #b6732730,2px 4px 8px #a6602621}
+.hero-value{position:relative;z-index:1;font-family:var(--app-sans);font-size:27px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-1px;line-height:1.15;margin:20px 0 18px;white-space:nowrap;color:inherit}
+.hero-card-foot{display:flex;justify-content:space-between;align-items:center;gap:7px;margin-top:auto;padding-top:11px;border-top:1px solid #fff3cc40;font-size:10px;font-weight:550;line-height:1.35;color:inherit;position:relative;z-index:1}
+.hero-card-foot b{font-size:10px;font-weight:750;letter-spacing:.6px}
+.hero-card.cash .hero-card-foot,.hero-card.outstanding .hero-card-foot{border-top-color:#7a3e212b}
+.hero-card .hero-mandala{position:absolute;width:115px;height:115px;right:-46px;bottom:4px;top:auto;left:auto;color:inherit;opacity:.075;z-index:-1;pointer-events:none}
+#month-label{margin-top:29px}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.hero-card.capital{background:linear-gradient(135deg,#9b3342,#6c192c)}.hero-card.cash{background:linear-gradient(135deg,#ffc046,#ff9935)}.hero-card.outstanding{background:linear-gradient(135deg,#ffe2a0,#f0bf61)}.hero-card.profit{background:linear-gradient(135deg,#216d50,#104731)}}
+@media(min-width:760px){.hero-overview{gap:17px}.hero-card{padding:21px 22px 18px;min-height:188px;border-radius:30px}.hero-card h3{font-size:14px}.hero-card-head{min-height:40px}.hero-card-icon{width:40px;height:42px;border-radius:15px}.hero-card-icon svg{width:22px;height:22px}.hero-value{font-size:36px;margin:18px 0}.hero-card-foot{font-size:12px;padding-top:12px}.hero-card-foot b{font-size:11px}.hero-card .hero-mandala{width:160px;height:160px;right:-35px;opacity:.085}.hero-card:after{width:190px;height:190px;right:-70px;top:5px}}
+@media(max-width:370px){.hero-overview{gap:11px}.hero-card{min-height:160px;padding:15px 12px 13px;border-radius:24px}.hero-card-head{gap:5px;min-height:34px}.hero-card h3{font-size:11px;line-height:1.5}.hero-card-icon{width:28px;height:30px;border-radius:10px}.hero-card-icon svg{width:16px;height:16px}.hero-value{font-size:23px;letter-spacing:-.8px;margin:18px 0 16px}.hero-card-foot{font-size:9px;padding-top:10px;gap:5px}.hero-card-foot b{font-size:9px}.hero-overview-head{margin-top:15px}.home-pool-meta{font-size:10px}}
+
+.home-month{padding:21px 19px 19px}
+.home-month-head{display:flex;align-items:center;justify-content:space-between;gap:9px;margin-bottom:17px}
+.home-month-head h3{font-size:25px;font-weight:700;color:#571d17;line-height:1.2;letter-spacing:-.4px;white-space:nowrap}
+.home-month-head .chip{font-size:11px;padding:6px 9px;white-space:nowrap;letter-spacing:0}
+.home-collection-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin-bottom:15px}
+.home-collection-tile{min-width:0;padding:14px 12px;border:1px solid #fff6df;border-radius:18px;background:linear-gradient(145deg,#fff4dbe0,#efd9adb8);box-shadow:inset 2px 2px 3px #fffcef,inset -2px -3px 4px #bc925533,2px 4px 8px #99602a1a}
+.home-collection-tile.received{background:linear-gradient(145deg,#f4f5d9e6,#dde6b4bf);border-color:#faffdf;box-shadow:inset 2px 2px 3px #ffffe9,inset -2px -3px 4px #9ba96530,2px 4px 8px #6f82311a}
+.home-tile-label{display:block;min-height:30px;font-size:10.5px;line-height:1.4;font-weight:650;letter-spacing:.3px;text-transform:uppercase;color:#5b3723}
+.home-tile-value{display:block;font-size:23px;line-height:1.3;font-weight:800;letter-spacing:-.7px;font-variant-numeric:tabular-nums;color:#5b2b17;margin-top:3px;overflow-wrap:anywhere}
+.received .home-tile-value{color:#145435}
+.home-month .flow{padding:0;margin:0 0 16px}.home-month .flow .fr{padding:11px 0;font-size:13px;color:#543123}
+.home-month .flow .v{font-size:14px;font-weight:750;font-variant-numeric:tabular-nums;letter-spacing:-.15px;color:#381b10}
+.home-month .flow .in .v{color:#145435}.home-month .flow .out .v{color:#9a2924}
+.home-month .flow .tot{margin-top:1px;padding-top:13px;border-top:1px solid #a36a3f55;color:#33150e}.home-month .flow .tot .v{font-size:16px;font-weight:800;color:#33150e}
+.home-month .btn{font-size:13px;min-height:48px;padding-left:10px;padding-right:10px}
+
+/* Bring the monthly ledger up to the same glass + clay finish as the hero cards. */
+.home-month{position:relative;isolation:isolate;border-radius:30px;padding:0 19px 20px;background:linear-gradient(140deg,rgba(255,249,222,.83),rgba(255,222,165,.68));border:1px solid #fff8e3;box-shadow:inset 2px 3px 3px #fff9e6,inset -3px -4px 7px #c68c4638,0 12px 28px #a4512826;backdrop-filter:blur(24px) saturate(145%);-webkit-backdrop-filter:blur(24px) saturate(145%)}
+.home-month .home-month-head{position:relative;isolation:isolate;overflow:hidden;margin:0 -19px 20px;padding:21px 19px 19px;gap:10px;background:linear-gradient(128deg,rgba(148,34,52,.94),rgba(100,20,39,.96));color:#fff6dc;border-bottom:1px solid #ffd8a9b3;box-shadow:inset 1px 2px 2px #ffd7b080,inset -2px -3px 6px #51152b59,0 4px 12px #7e253724;min-height:86px}
+.home-month-head:before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(120deg,#fff4ce14,transparent 60%)}
+.home-month-head:after{content:'';position:absolute;right:-25px;top:-80px;width:200px;height:200px;border:1px solid #ffe8bb33;box-shadow:0 0 0 13px #ffedc10f,0 0 0 28px #ffedc10a;border-radius:50%;z-index:-1;pointer-events:none}
+.month-title{display:flex;align-items:center;gap:10px;min-width:0}
+.month-calendar{width:35px;height:38px;display:grid;place-items:center;flex-shrink:0;border:1px solid #ffe1b778;border-radius:13px;background:linear-gradient(140deg,#ffedbc38,#ffcf9c14);box-shadow:inset 1px 2px 2px #ffe6c166,inset -2px -3px 4px #541c2a66,2px 4px 8px #53192b24}
+.month-calendar svg{width:20px;height:20px;stroke-width:1.9}
+.home-month .home-month-head h3{font-size:25px;color:#fff6dc;letter-spacing:-.6px;position:relative;z-index:1}
+.home-month .home-month-head .chip{background:linear-gradient(140deg,#ffe3a4,#f4bf67);color:#5a2b12;border:1px solid #ffefbe;box-shadow:inset 1px 2px 2px #fff5d4,inset -2px -3px 4px #b97b363b,2px 4px 7px #48172926;font-size:10px;font-weight:750;padding:7px 9px;letter-spacing:0;position:relative;z-index:1}
+.home-month .home-collection-tiles{gap:12px;margin:0 0 18px}
+.home-month .home-collection-tile{position:relative;isolation:isolate;overflow:hidden;min-height:103px;padding:16px 13px 15px;border:1px solid #fff2c7;border-radius:21px;background:linear-gradient(135deg,rgba(255,219,119,.93),rgba(247,171,54,.86));box-shadow:inset 2px 3px 3px #fff4c8d9,inset -3px -4px 6px #ba7d3738,3px 6px 12px #b1722926;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.home-month .home-collection-tile:after{content:'';position:absolute;right:-26px;top:-37px;width:90px;height:90px;border:1px solid #fff5ce59;border-radius:50%;box-shadow:0 0 0 12px #fff6d312;z-index:-1;pointer-events:none}
+.home-month .home-collection-tile.received{background:linear-gradient(135deg,rgba(23,94,66,.96),rgba(12,65,47,.97));border:1px solid #e7eac0ba;box-shadow:inset 2px 3px 3px #dceab885,inset -3px -4px 6px #0c372b66,3px 6px 12px #326a4026;color:#fff8dd}
+.home-month .home-tile-label{color:#5a2b12;font-size:10px;line-height:1.45;font-weight:750;letter-spacing:.3px;min-height:29px}
+.home-month .home-tile-value{color:#4c210c;font-size:24px;line-height:1.2;font-weight:800;letter-spacing:-.8px;margin-top:9px;position:relative;z-index:1}
+.home-month .received .home-tile-label,.home-month .received .home-tile-value{color:#fff8dd}
+.home-month .flow{margin:0 0 18px;padding:3px 15px 0;overflow:hidden;border:1px solid #fffaf0;border-radius:22px;background:linear-gradient(140deg,#fffdf0c4,#fff2d19e);box-shadow:inset 1px 2px 2px #fffdf2,inset -2px -3px 5px #b78a4930,0 5px 13px #a06e2917}
+.home-month .flow .fr{padding:13px 0;font-size:13px;color:#543123;border-bottom:1px solid #9e663225}
+.home-month .flow .v{font-size:14px;font-weight:750;letter-spacing:-.15px;line-height:1.5}
+.home-month .flow .fr:nth-last-child(2){border-bottom:0;padding-bottom:15px}
+.home-month .flow .tot{margin:0 -15px;padding:14px 15px;border-top:1px solid #fbe4ab;border-bottom:0;background:linear-gradient(120deg,#ffdf8be8,#ffc46dc7);color:#52200b;box-shadow:inset 0 1px 0 #fff5d7,inset 0 -2px 3px #c28b3230;align-items:center}
+.home-month .flow .tot>span:first-child{font-size:14px;font-weight:750}
+.home-month .flow .tot .v{font-size:22px;font-weight:800;letter-spacing:-.6px;color:#52200b}
+.home-month .home-month-action{width:100%;justify-content:space-between;min-height:53px;padding:11px 12px 11px 15px;border:1px solid #bd6657;border-radius:18px;background:linear-gradient(140deg,#a33744,#762137);box-shadow:inset 2px 3px 3px #ec9e837a,inset -3px -4px 6px #51162e70,3px 7px 14px #7d273630;color:#fff8df;font-size:13px;font-weight:750;text-align:left;line-height:1.45}
+.home-month-action .month-action-arrow{display:grid;place-items:center;flex-shrink:0;width:30px;height:30px;border-radius:10px;border:1px solid #ffe8bc4d;background:#fff0c822;box-shadow:inset 1px 1px 2px #fff3d13d,inset -1px -2px 2px #57152b4d;font-size:19px;font-weight:500}
+@media(min-width:760px){.home-month{padding:0 23px 23px}.home-month .home-month-head{margin-left:-23px;margin-right:-23px;padding:23px;min-height:92px;margin-bottom:22px}.home-month .home-month-head h3{font-size:29px}.home-month .home-month-head .chip{font-size:12px;padding:8px 12px}.month-calendar{width:40px;height:42px;border-radius:15px}.month-calendar svg{width:22px;height:22px}.home-month .home-collection-tiles{gap:15px}.home-month .home-collection-tile{padding:18px;min-height:108px}.home-month .home-tile-label{min-height:16px;font-size:11px}.home-month .home-tile-value{font-size:29px;margin-top:11px}.home-month .flow .fr{font-size:14px;padding-top:14px;padding-bottom:14px}.home-month .flow .v{font-size:15px}.home-month .flow .tot .v{font-size:25px}.home-month .home-month-action{font-size:14px}}
+@media(max-width:370px){.home-month{padding:0 14px 17px;border-radius:27px}.home-month .home-month-head{margin:0 -14px 16px;padding:19px 14px;gap:7px;min-height:79px}.month-title{gap:7px}.month-calendar{width:29px;height:32px;border-radius:11px}.month-calendar svg{width:17px;height:17px}.home-month .home-month-head h3{font-size:22px}.home-month .home-month-head .chip{font-size:9px;padding:6px 7px}.home-month .home-collection-tiles{gap:9px;margin-bottom:15px}.home-month .home-collection-tile{padding:14px 10px;min-height:98px;border-radius:18px}.home-month .home-tile-label{font-size:9.5px;min-height:28px;letter-spacing:.1px}.home-month .home-tile-value{font-size:21px;letter-spacing:-.9px;margin-top:8px}.home-month .flow{padding:2px 12px 0;border-radius:19px;margin-bottom:15px}.home-month .flow .fr{font-size:12px;padding:12px 0}.home-month .flow .v{font-size:13px}.home-month .flow .tot{margin:0 -12px;padding:13px 12px}.home-month .flow .tot>span:first-child{font-size:13px}.home-month .flow .tot .v{font-size:20px}.home-month .home-month-action{font-size:12px;min-height:51px;padding-left:12px;gap:6px}.home-month-action .month-action-arrow{width:27px;height:28px;border-radius:9px}}
+
+.hero-overview-head .home-pool-meta{margin-top:5px;font-size:10px}
+.hero-value{white-space:normal;overflow-wrap:anywhere}
+.hero-card-foot>span{min-width:0}
+.home-month-head{flex-wrap:wrap}
+.home-month-head .chip{max-width:100%;white-space:normal;overflow-wrap:anywhere}
+.home-collection-status{display:flex;justify-content:space-between;gap:12px;font-size:11px;font-weight:650;color:#543123;margin-top:-2px}
+.home-month .glass-progress{margin:9px 0 7px;height:6px;background:#8d653725}
+.home-collection-remaining{font-size:11px;color:#543123;margin-bottom:18px;text-align:right}
+.home-month-complete{padding:12px;text-align:center;color:#145435;font-weight:700;font-size:13px}
+.glass-om .glass-icon{width:76px;height:76px;stroke-width:1.3}
+.glass-collection-status,.home-tile-value,.home-month .flow .v{font-variant-numeric:tabular-nums}
+@media(max-width:370px){.hero-overview-head .home-pool-meta{font-size:9px}.home-collection-status,.home-collection-remaining{font-size:10px}.home-month .home-collection-tile{min-height:98px}}
+
+</style>
 </head>
 <body>
 
 <div id="authGate" class="auth-gate">
   <div class="auth-box">
-    <div class="auth-logo"><span class="glass-brand-mark"><svg class="glass-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c-3 3-4.6 5.8-4.6 8.5S9.5 17 12 18c2.5-1 4.6-3.8 4.6-6.5S15 6 12 3Z"/><path d="M7.5 10C5.7 8.6 3.7 8 2 8c0 6.5 3.6 11 10 12 6.4-1 10-5.5 10-12-1.7 0-3.7.6-5.5 2M4 20h16"/></svg></span>Shree</div><div class="glass-auth-art"><svg class="glass-mandala" viewBox="0 0 200 200" fill="none" stroke="currentColor" aria-hidden="true"><circle cx="100" cy="100" r="86"/><circle cx="100" cy="100" r="80"/><circle cx="100" cy="100" r="64"/><circle cx="100" cy="100" r="33"/><g><path d="M100 20Q139 60 100 100Q61 60 100 20ZM180 100Q140 139 100 100Q140 61 180 100ZM100 180Q61 140 100 100Q139 140 100 180ZM20 100Q60 61 100 100Q60 139 20 100Z"/><path d="M100 20Q139 60 100 100Q61 60 100 20ZM180 100Q140 139 100 100Q140 61 180 100ZM100 180Q61 140 100 100Q139 140 100 180ZM20 100Q60 61 100 100Q60 139 20 100Z" transform="rotate(45 100 100)"/></g><g stroke-width="1.5"><path d="M100 5v8m0 174v8M5 100h8m174 0h8M33 33l6 6m122 122 6 6M33 167l6-6m122-122 6-6"/></g></svg><span class="glass-om" aria-hidden="true">ॐ</span><small>॥ शुभ आरंभ ॥</small></div>
-    <h1 class="serif">Shubh aarambh.<br><em>Saath ki samriddhi.</em></h1>
-    <p class="glass-auth-sub">Apne hisaab se judne ke liye login karo.</p>
+    <div class="auth-logo"><span class="glass-brand-mark"><svg class="glass-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c-3 3-4.6 5.8-4.6 8.5S9.5 17 12 18c2.5-1 4.6-3.8 4.6-6.5S15 6 12 3Z"/><path d="M7.5 10C5.7 8.6 3.7 8 2 8c0 6.5 3.6 11 10 12 6.4-1 10-5.5 10-12-1.7 0-3.7.6-5.5 2M4 20h16"/></svg></span>Shree</div><div class="glass-auth-art"><svg class="glass-mandala" viewBox="0 0 200 200" fill="none" stroke="currentColor" aria-hidden="true"><circle cx="100" cy="100" r="86"/><circle cx="100" cy="100" r="80"/><circle cx="100" cy="100" r="64"/><circle cx="100" cy="100" r="33"/><g><path d="M100 20Q139 60 100 100Q61 60 100 20ZM180 100Q140 139 100 100Q140 61 180 100ZM100 180Q61 140 100 100Q139 140 100 180ZM20 100Q60 61 100 100Q60 139 20 100Z"/><path d="M100 20Q139 60 100 100Q61 60 100 20ZM180 100Q140 139 100 100Q140 61 180 100ZM100 180Q61 140 100 100Q139 140 100 180ZM20 100Q60 61 100 100Q60 139 20 100Z" transform="rotate(45 100 100)"/></g><g stroke-width="1.5"><path d="M100 5v8m0 174v8M5 100h8m174 0h8M33 33l6 6m122 122 6 6M33 167l6-6m122-122 6-6"/></g></svg><span class="glass-om" aria-hidden="true"><svg class="glass-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c-3 3-4.6 5.8-4.6 8.5S9.5 17 12 18c2.5-1 4.6-3.8 4.6-6.5S15 6 12 3Z"/><path d="M7.5 10C5.7 8.6 3.7 8 2 8c0 6.5 3.6 11 10 12 6.4-1 10-5.5 10-12-1.7 0-3.7.6-5.5 2M4 20h16"/></svg></span><small>A NEW BEGINNING</small></div>
+    <h1 class="serif">A fresh start.<br><em>Prosper together.</em></h1>
+    <p class="glass-auth-sub">Log in to access your ledger.</p>
     <div class="field"><label>Email</label><input id="gEmail" type="email" placeholder="email" autocomplete="username"></div>
     <div class="field"><label>Password</label><input id="gPw" type="password" placeholder="password" autocomplete="current-password"></div>
     <button class="btn full" onclick="gateAuth(false)">Login</button>
-    <button class="btn full ghost" style="margin-top:10px" onclick="gateAuth(true)">Pehli baar? Sign up</button>
+    <button class="btn full ghost" style="margin-top:10px" onclick="gateAuth(true)">New here? Sign up</button>
     <div id="gateMsg" style="font-size:12.5px;color:var(--muted);text-align:center;margin-top:14px;min-height:16px"></div><div class="glass-security"><svg class="glass-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></svg> Your personal savings & lending ledger</div>
   </div>
 </div>
@@ -516,12 +604,15 @@ button:focus-visible,[tabindex]:focus-visible,summary:focus-visible,input:focus-
 <div class="page active" id="page-dash">
   <div class="wrap">
     <div class="glass-greeting"><span>॥ शुभ लाभ ॥</span><button id="cloudBadge" class="glass-cloud" onclick="go('backup')" aria-label="Cloud sync status and settings">☁︎ Local</button></div>
-    <div class="bal-card"><svg class="glass-mandala" viewBox="0 0 200 200" fill="none" stroke="currentColor" aria-hidden="true"><circle cx="100" cy="100" r="86"/><circle cx="100" cy="100" r="80"/><circle cx="100" cy="100" r="64"/><circle cx="100" cy="100" r="33"/><g><path d="M100 20Q139 60 100 100Q61 60 100 20ZM180 100Q140 139 100 100Q140 61 180 100ZM100 180Q61 140 100 100Q139 140 100 180ZM20 100Q60 61 100 100Q60 139 20 100Z"/><path d="M100 20Q139 60 100 100Q61 60 100 20ZM180 100Q140 139 100 100Q140 61 180 100ZM100 180Q61 140 100 100Q139 140 100 180ZM20 100Q60 61 100 100Q60 139 20 100Z" transform="rotate(45 100 100)"/></g><g stroke-width="1.5"><path d="M100 5v8m0 174v8M5 100h8m174 0h8M33 33l6 6m122 122 6 6M33 167l6-6m122-122 6-6"/></g></svg><div class="lbl"><span>CASH IN HAND</span><svg class="glass-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19 19 5M6 5h13v13"/></svg></div><div class="amt" id="hdrBalance">0.000 <small id="hdrCur">KD</small></div><div class="glass-balance-caption">Aapke pool ki agli madad ke liye.</div><div class="bal-mini"><div><b id="hdrMembers">0</b> members · <b id="hdrShares">0</b> shares</div><div>On loan: <b id="hdrOnLoan">0.000</b></div></div></div>
-    <div class="stat-grid"><div class="stat"><div class="k"><svg class="glass-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22v-8M12 14c-6 0-9-3-9-8 6 0 9 3 9 8ZM12 12c0-6 3-9 9-9 0 6-3 9-9 9Z"/></svg> Members’ capital</div><div class="v" id="dCapital">0.000</div></div><div class="stat"><div class="k"><svg class="glass-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="15" cy="6" r="3"/><path d="M4 21v-9l4-1 4 2h4a2 2 0 0 1 0 4h-5m-7 4h13l5-6a2 2 0 0 0-3-2l-2 2M1 12h3v9H1"/></svg> Outstanding loans</div><div class="v" id="dOut">0.000</div></div></div><span id="dCash" hidden>0.000</span>
-
-    <div class="section-title">This month’s collection<button class="glass-section-link" onclick="go('ledger')">Open ledger <svg class="glass-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19 19 5M6 5h13v13"/></svg></button></div>
-    <div class="card card-pad" id="dThisMonth"></div>
-    <div class="glass-profit-strip"><span><svg class="glass-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22v-8M12 14c-6 0-9-3-9-8 6 0 9 3 9 8ZM12 12c0-6 3-9 9-9 0 6-3 9-9 9Z"/></svg> Profit distributed</span><span><strong id="dProfit">0.000</strong> <small data-glass-currency>KD</small></span></div>
+<div class="hero-overview-head"><div><h2 id="overview-label">Overview</h2><div class="home-pool-meta"><span id="hdrMembers">0</span> members · <span id="hdrShares">0</span> shares</div></div><span data-home-month></span></div>
+    <section class="hero-overview" aria-labelledby="overview-label">
+<article class="hero-card capital"><svg class="hero-mandala" viewBox="0 0 200 200" fill="none" stroke="currentColor" aria-hidden="true"><circle cx="100" cy="100" r="86"/><circle cx="100" cy="100" r="80"/><circle cx="100" cy="100" r="64"/><circle cx="100" cy="100" r="33"/><g><path d="M100 20Q139 60 100 100Q61 60 100 20ZM180 100Q140 139 100 100Q140 61 180 100ZM100 180Q61 140 100 100Q139 140 100 180ZM20 100Q60 61 100 100Q60 139 20 100Z"/><path d="M100 20Q139 60 100 100Q61 60 100 20ZM180 100Q140 139 100 100Q140 61 180 100ZM100 180Q61 140 100 100Q139 140 100 180ZM20 100Q60 61 100 100Q60 139 20 100Z" transform="rotate(45 100 100)"/></g><g stroke-width="1.5"><path d="M100 5v8m0 174v8M5 100h8m174 0h8M33 33l6 6m122 122 6 6M33 167l6-6m122-122 6-6"/></g></svg><div class="hero-card-head"><h3>Members’<br>capital</h3><span class="hero-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22v-8M12 14c-6 0-9-3-9-8 6 0 9 3 9 8ZM12 12c0-6 3-9 9-9 0 6-3 9-9 9Z"/></svg></span></div><div class="hero-value" id="dCapital">0.000</div><div class="hero-card-foot"><span><span id="heroShares">0</span> shares</span><b data-glass-currency>KD</b></div></article>
+<article class="hero-card cash"><svg class="hero-mandala" viewBox="0 0 200 200" fill="none" stroke="currentColor" aria-hidden="true"><circle cx="100" cy="100" r="86"/><circle cx="100" cy="100" r="80"/><circle cx="100" cy="100" r="64"/><circle cx="100" cy="100" r="33"/><g><path d="M100 20Q139 60 100 100Q61 60 100 20ZM180 100Q140 139 100 100Q140 61 180 100ZM100 180Q61 140 100 100Q139 140 100 180ZM20 100Q60 61 100 100Q60 139 20 100Z"/><path d="M100 20Q139 60 100 100Q61 60 100 20ZM180 100Q140 139 100 100Q140 61 180 100ZM100 180Q61 140 100 100Q139 140 100 180ZM20 100Q60 61 100 100Q60 139 20 100Z" transform="rotate(45 100 100)"/></g><g stroke-width="1.5"><path d="M100 5v8m0 174v8M5 100h8m174 0h8M33 33l6 6m122 122 6 6M33 167l6-6m122-122 6-6"/></g></svg><div class="hero-card-head"><h3>Cash in<br>hand</h3><span class="hero-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 8V5a2 2 0 0 0-2-2H5a3 3 0 0 0 0 6h15v11H5a3 3 0 0 1-3-3V6"/><path d="M20 12h-5a2 2 0 0 0 0 4h5"/><path d="M15 14h.01"/></svg></span></div><div class="hero-value" id="dCash">0.000</div><div class="hero-card-foot"><span>Ready to lend</span><b data-glass-currency>KD</b></div></article>
+<article class="hero-card outstanding"><svg class="hero-mandala" viewBox="0 0 200 200" fill="none" stroke="currentColor" aria-hidden="true"><circle cx="100" cy="100" r="86"/><circle cx="100" cy="100" r="80"/><circle cx="100" cy="100" r="64"/><circle cx="100" cy="100" r="33"/><g><path d="M100 20Q139 60 100 100Q61 60 100 20ZM180 100Q140 139 100 100Q140 61 180 100ZM100 180Q61 140 100 100Q139 140 100 180ZM20 100Q60 61 100 100Q60 139 20 100Z"/><path d="M100 20Q139 60 100 100Q61 60 100 20ZM180 100Q140 139 100 100Q140 61 180 100ZM100 180Q61 140 100 100Q139 140 100 180ZM20 100Q60 61 100 100Q60 139 20 100Z" transform="rotate(45 100 100)"/></g><g stroke-width="1.5"><path d="M100 5v8m0 174v8M5 100h8m174 0h8M33 33l6 6m122 122 6 6M33 167l6-6m122-122 6-6"/></g></svg><div class="hero-card-head"><h3>Outstanding<br>loans</h3><span class="hero-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="15" cy="6" r="3"/><path d="M4 21v-9l4-1 4 2h4a2 2 0 0 1 0 4h-5m-7 4h13l5-6a2 2 0 0 0-3-2l-2 2M1 12h3v9H1"/></svg></span></div><div class="hero-value" id="dOut">0.000</div><div class="hero-card-foot"><span><span id="heroLoanCount">0</span> running loans</span><b data-glass-currency>KD</b></div></article>
+<article class="hero-card profit"><svg class="hero-mandala" viewBox="0 0 200 200" fill="none" stroke="currentColor" aria-hidden="true"><circle cx="100" cy="100" r="86"/><circle cx="100" cy="100" r="80"/><circle cx="100" cy="100" r="64"/><circle cx="100" cy="100" r="33"/><g><path d="M100 20Q139 60 100 100Q61 60 100 20ZM180 100Q140 139 100 100Q140 61 180 100ZM100 180Q61 140 100 100Q139 140 100 180ZM20 100Q60 61 100 100Q60 139 20 100Z"/><path d="M100 20Q139 60 100 100Q61 60 100 20ZM180 100Q140 139 100 100Q140 61 180 100ZM100 180Q61 140 100 100Q139 140 100 180ZM20 100Q60 61 100 100Q60 139 20 100Z" transform="rotate(45 100 100)"/></g><g stroke-width="1.5"><path d="M100 5v8m0 174v8M5 100h8m174 0h8M33 33l6 6m122 122 6 6M33 167l6-6m122-122 6-6"/></g></svg><div class="hero-card-head"><h3>Profit<br>distributed</h3><span class="hero-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20V10M8 20v-6M13 20v-3M18 20v-8M3 6l5 3 5-6 5 3 4-4M18 2h4v4"/></svg></span></div><div class="hero-value" id="dProfit">0.000</div><div class="hero-card-foot"><span>Shared so far</span><b data-glass-currency>KD</b></div></article>
+</section>
+    <div class="section-title" id="month-label">This month<button class="glass-section-link" onclick="openLedgerMonth(currentMonth())">Open ledger <svg class="glass-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M5 19 19 5M6 5h13v13"/></svg></button></div>
+    <section class="card home-month" id="dThisMonth" aria-labelledby="month-label"></section>
 
     <div class="section-title">Active loans <span id="dLoanCount" class="chip open">0</span></div>
     <div class="card" id="dActiveLoans"></div>
@@ -558,7 +649,7 @@ button:focus-visible,[tabindex]:focus-visible,summary:focus-visible,input:focus-
 <!-- ============ LEDGER ============ -->
 <div class="page" id="page-ledger">
   <div class="wrap">
-    <div class="glass-page-head"><div><div class="glass-eyebrow">शुभ लाभ / <span data-glass-month></span></div><h2>Ledger</h2><p>Har mahine ka poora hisaab.</p></div><button class="glass-add" onclick="loanForm()" aria-label="Add loan"><svg class="glass-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button></div>
+    <div class="glass-page-head"><div><div class="glass-eyebrow">शुभ लाभ / <span data-glass-month></span></div><h2>Ledger</h2><p>Your complete monthly ledger.</p></div><button class="glass-add" onclick="loanForm()" aria-label="Add loan"><svg class="glass-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button></div>
     <div id="ledgerList"></div>
   </div>
   <div id="ledgerExportBar"></div>
@@ -610,18 +701,18 @@ button:focus-visible,[tabindex]:focus-visible,summary:focus-visible,input:focus-
 
     <div class="section-title">PDF report</div>
     <div class="card card-pad">
-      <p style="margin:0 0 12px;color:var(--ink2);font-size:13.5px">Month-wise loans + ledger ka record. Date range chuno — report me opening balance, har month ka aawak, line-wise loan detail, exits aur closing aayega.</p>
+      <p style="margin:0 0 12px;color:var(--ink2);font-size:13.5px">Choose a date range to download a monthly report with opening balances, collections, loan details, member withdrawals and closing balances.</p>
       <div class="frow">
         <div class="field"><label>From month</label><input id="rptFrom" type="month"></div>
         <div class="field"><label>To month</label><input id="rptTo" type="month"></div>
       </div>
       <button class="btn full" onclick="generateReport()">📄 Download PDF report</button>
-      <p style="margin:12px 0 0;color:var(--muted);font-size:12px">PDF file seedha download ho jaayegi — phone ke Downloads/Files me mil jaayegi.</p>
+      <p style="margin:12px 0 0;color:var(--muted);font-size:12px">The PDF will be saved to your device’s Downloads or Files folder.</p>
     </div>
 
     <div class="section-title">Backup & restore</div>
     <div class="card card-pad">
-      <p style="margin:0 0 14px;color:var(--ink2);font-size:13.5px">Data tere phone me hi save rehta hai. Naya phone lene ya app dobara kholne se pehle backup zaroor utaar lena.</p>
+      <p style="margin:0 0 14px;color:var(--ink2);font-size:13.5px">Download a backup to keep a separate copy of your ledger. You can restore it when needed or when changing devices.</p>
       <button class="btn full ghost" style="margin-bottom:10px" onclick="exportData()">⬇︎ Download backup (.json)</button>
       <button class="btn full ghost" style="margin-bottom:10px" onclick="document.getElementById('importFile').click()">⬆︎ Restore from backup</button>
       <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
@@ -645,7 +736,7 @@ button:focus-visible,[tabindex]:focus-visible,summary:focus-visible,input:focus-
     </div>
     <div class="search-bar">
       <span class="si">🔍</span>
-      <input id="searchInput" type="text" placeholder="Naam, amount, mahina ya status…" oninput="onSearchInput(this.value)" autocomplete="off">
+      <input id="searchInput" type="text" placeholder="Name, amount, month or status…" oninput="onSearchInput(this.value)" autocomplete="off">
       <button class="sx" onclick="clearSearch()" aria-label="Clear">×</button>
     </div>
     <div class="fchips" id="searchChips"></div>
@@ -1398,11 +1489,8 @@ function go(p){
 function render(){
   const s=state.settings;
   document.getElementById('poolSub').textContent='विश्वास • सहयोग • समृद्धि';
-  document.getElementById('hdrCur').textContent=s.cur;
-  document.getElementById('hdrBalance').firstChild.textContent=money(currentBalance())+' ';
   document.getElementById('hdrMembers').textContent=activeMembers().length;
   document.getElementById('hdrShares').textContent=totalActiveShares();
-  document.getElementById('hdrOnLoan').textContent=money(totalOutstanding());
   if(curPage==='dash')renderDash();
   if(curPage==='members')renderMembers();
   if(curPage==='loans')renderLoans();
@@ -1419,6 +1507,9 @@ function renderDash(){
   document.getElementById('dCash').textContent=money(currentBalance());
   document.getElementById('dOut').textContent=money(totalOutstanding());
   document.getElementById('dProfit').textContent=money(totalProfitDistributed());
+  document.getElementById('heroShares').textContent=totalActiveShares();
+  document.getElementById('heroLoanCount').textContent=state.loans.filter(l=>l.status==='active').length;
+  document.querySelectorAll('[data-home-month]').forEach(el=>el.textContent=monthLabel(currentMonth()));
 
   const rows=buildLedger();const cm=currentMonth();const tm=rows.find(r=>r.key===cm)||rows[rows.length-1];
   const tmBox=document.getElementById('dThisMonth');
@@ -1427,36 +1518,40 @@ function renderDash(){
     const received=tm.dueList.filter(d=>d.paid).length;
     const collected=tm.dueList.filter(d=>d.paid).reduce((sum,d)=>sum+d.amount,0);
     const progress=tm.expected?Math.min(100,Math.round(collected/tm.expected*100)):0;
-    tmBox.innerHTML=`<div class="glass-collection-head"><span>${monthFull(tm.key)} collection</span><span class="chip done">${received} / ${tm.dueList.length} received</span></div>
-      <div class="glass-collection-amount">${money(tm.aavak)} <small>/ ${money(tm.expected)} ${esc(state.settings.cur)}</small></div>
+    tmBox.innerHTML=`<div class="home-month-head"><div class="month-title"><span class="month-calendar" aria-hidden="true">${glassIcon('calendar-days')}</span><h3>${monthLabel(tm.key)}</h3></div><span class="chip active">Balance ${money(tm.close)}</span></div>
+      <div class="home-collection-tiles">
+        <div class="home-collection-tile"><span class="home-tile-label">Expected collection</span><strong class="home-tile-value">${money(tm.expected)}</strong></div>
+        <div class="home-collection-tile received"><span class="home-tile-label">Collected</span><strong class="home-tile-value">${money(tm.aavak)}</strong></div>
+      </div>
+      <div class="home-collection-status"><span>${received} / ${tm.dueList.length} installments received</span><span>${progress}%</span></div>
       <div class="glass-progress" role="progressbar" aria-label="${monthLabel(tm.key)} installments received" aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100"><span style="width:${progress}%"></span></div>
-      <div class="glass-collection-foot"><span>${progress}% collected</span><span>${money(Math.max(0,round3(tm.expected-collected)))} ${esc(state.settings.cur)} remaining</span></div>
-      <details class="glass-flow"><summary>Cash flow details · Shesh ${money(tm.close)}</summary><div class="flow" style="padding:0;margin-top:6px">
-        <div class="fr"><span>Pichla shesh</span><span class="v">${money(tm.open)}</span></div>
-        <div class="fr in"><span>Aavak (collect)</span><span class="v">+${money(tm.aavak)}</span></div>
-        <div class="fr out"><span>Naye loan</span><span class="v">−${money(tm.jaavak)}</span></div>
-        ${tm.exitSum?`<div class="fr out"><span>Exits</span><span class="v">−${money(tm.exitSum)}</span></div>`:''}
-        <div class="fr tot"><span>Shesh</span><span class="v">${money(tm.close)}</span></div>
-      </div></details>
-      ${pending?`<button class="btn full" style="margin-top:13px" onclick="go('ledger')">Collect ${pending} installments ${glassIcon('arrow-right')}</button>`:''}`;
+      <div class="home-collection-remaining">${money(Math.max(0,round3(tm.expected-collected)))} ${esc(state.settings.cur)} remaining</div>
+      <div class="flow">
+        <div class="fr"><span>Opening balance</span><span class="v">${money(tm.open)}</span></div>
+        <div class="fr in"><span>Collections</span><span class="v">+${money(tm.aavak)}</span></div>
+        <div class="fr out"><span>New loans</span><span class="v">−${money(tm.jaavak)}</span></div>
+        ${tm.exitSum?`<div class="fr out"><span>Member withdrawals</span><span class="v">−${money(tm.exitSum)}</span></div>`:''}
+        <div class="fr tot"><span>Closing balance</span><span class="v">${money(tm.close)}</span></div>
+      </div>
+      ${pending?`<button class="btn full home-month-action" onclick="openLedgerMonth('${tm.key}')"><span>Collect ${pending} installment${pending===1?'':'s'}</span><span class="month-action-arrow" aria-hidden="true">→</span></button>`:'<div class="home-month-complete">✓ All installments collected</div>'}`;
   }else tmBox.innerHTML='<div class="empty"><p>No ledger yet</p></div>';
 
   const act=state.loans.filter(l=>l.status==='active');
   document.getElementById('dLoanCount').textContent=act.length;
   const al=document.getElementById('dActiveLoans');
-  if(!act.length)al.innerHTML='<div class="empty"><div class="ic">💸</div><p>Koi running loan nahi</p></div>';
+  if(!act.length)al.innerHTML='<div class="empty"><div class="ic">💸</div><p>No active loans</p></div>';
   else al.innerHTML=act.slice(0,6).map(l=>{
     const paid=l.installments.filter(i=>i.paid).length;
     return `<div class="lrow tap" onclick="openLoan('${l.id}')">
       <div class="av">${initials(l.borrower)}</div>
       <div class="mn"><div class="nm">${esc(l.borrower)}</div>
-        <div class="ds">${paid}/${l.inst} kishtein · gross ${money(l.gross)}</div></div>
-      <div class="rt"><div class="big">${money(loanOutstanding(l))}</div><div class="sm">baaki</div></div>
+        <div class="ds">${paid}/${l.inst} installments · gross ${money(l.gross)}</div></div>
+      <div class="rt"><div class="big">${money(loanOutstanding(l))}</div><div class="sm">remaining</div></div>
     </div>`;}).join('');
 
   const rd=document.getElementById('dRecentDist');
   const ms=distByMonth().slice(0,5);
-  if(!ms.length)rd.innerHTML='<div class="empty"><div class="ic">🪙</div><p>Abhi koi profit split nahi hua</p></div>';
+  if(!ms.length)rd.innerHTML='<div class="empty"><div class="ic">🪙</div><p>No profit distributions yet</p></div>';
   else rd.innerHTML=ms.map(m=>`<div class="lrow">
       <div class="av" style="background:var(--green-soft);color:var(--green)">🪙</div>
       <div class="mn"><div class="nm">${monthLabel(m.monthKey)}</div>
@@ -1471,7 +1566,7 @@ function setMemberFilter(f){memberFilter=f;document.getElementById('mSegA').clas
 function renderMembers(){
   const list=document.getElementById('membersList');
   const ms=state.members.filter(m=>m.status===memberFilter);
-  if(!ms.length){list.innerHTML=`<div class="empty"><div class="ic">👥</div><p>${memberFilter==='active'?'Koi active member nahi':'Koi exited member nahi'}</p></div>`;return;}
+  if(!ms.length){list.innerHTML=`<div class="empty"><div class="ic">👥</div><p>${memberFilter==='active'?'No active members':'No exited members'}</p></div>`;return;}
   const totalSh=totalActiveShares();
   list.innerHTML='<div class="card">'+ms.map(m=>{
     const base=baseCapital(m);
@@ -1493,17 +1588,17 @@ function setLoanFilter(f){loanFilter=f;document.getElementById('lSegA').classLis
 function renderLoans(){
   const list=document.getElementById('loansList');
   const ls=state.loans.filter(l=>l.status===loanFilter).sort((a,b)=>monthCmp(b.start,a.start));
-  if(!ls.length){list.innerHTML=`<div class="empty"><div class="ic">${glassIcon('hand-coins')}</div><p>${loanFilter==='active'?'Koi running loan nahi':'Koi completed loan nahi'}</p></div>`;return;}
+  if(!ls.length){list.innerHTML=`<div class="empty"><div class="ic">${glassIcon('hand-coins')}</div><p>${loanFilter==='active'?'No active loans':'No completed loans'}</p></div>`;return;}
   const groups={};ls.forEach(l=>{(groups[l.start]=groups[l.start]||[]).push(l);});
   const keys=Object.keys(groups).sort((a,b)=>monthCmp(b,a));
   list.innerHTML=keys.map(mk=>{
     const g=groups[mk],gNet=round3(g.reduce((s,l)=>s+netOf(l),0));
-    return `<div class="section-title" style="margin-top:18px">${monthLabel(mk)} ke loan <span style="font-size:11px;font-weight:400;color:var(--ink2)">${g.length} · diya ${money(gNet)}</span></div>`+g.map(l=>{
+    return `<div class="section-title" style="margin-top:18px">${monthLabel(mk)} loans <span style="font-size:11px;font-weight:400;color:var(--ink2)">${g.length} · disbursed ${money(gNet)}</span></div>`+g.map(l=>{
       const paid=l.installments.filter(i=>i.paid).length,next=l.installments.find(i=>!i.paid);
       return `<article class="card glass-loan"><div class="glass-loan-head"><div class="av">${initials(l.borrower)}</div><div class="glass-loan-person"><strong>${esc(l.borrower)}</strong><small>${monthLabel(l.start)} · ${l.rate}% upfront</small></div><span class="chip ${l.status==='completed'?'done':'open'}">${l.status==='completed'?'Complete':'Running'}</span></div>
-      <div class="glass-loan-total"><strong>${money(l.gross)} <small>${esc(state.settings.cur)}</small></strong><span>${money(loanOutstanding(l))} baaki<br>${paid}/${l.inst} kishtein received</span></div>
+      <div class="glass-loan-total"><strong>${money(l.gross)} <small>${esc(state.settings.cur)}</small></strong><span>${money(loanOutstanding(l))} remaining<br>${paid}/${l.inst} installments received</span></div>
       <div class="glass-installments" role="img" aria-label="${paid} of ${l.inst} installments received">${l.installments.map(i=>`<i class="${i.paid?'paid':''}"></i>`).join('')}</div>
-      <div class="glass-loan-footer"><span>${next?'Next · '+monthLabel(next.due):'Sab kishtein received'}</span><button class="glass-section-link" onclick="openLoan('${l.id}')" aria-label="View ${esc(l.borrower)} loan">View details ${glassIcon('chevron-right')}</button></div></article>`;
+      <div class="glass-loan-footer"><span>${next?'Next · '+monthLabel(next.due):'All installments received'}</span><button class="glass-section-link" onclick="openLoan('${l.id}')" aria-label="View ${esc(l.borrower)} loan">View details ${glassIcon('chevron-right')}</button></div></article>`;
     }).join('');
   }).join('');
 }
@@ -1516,14 +1611,14 @@ function dueRowHtml(d,selMode,editing){
     return `<div class="coll-row sel-on ${sel?'sel':''}" onclick="toggleSelectItem('${dueRowKey(d)}')">
       <div class="ck sel-ck">${sel?'✓':''}</div>
       <div class="ci"><div class="cn">${esc(d.borrower)}</div>
-        <div class="cs">Kisht ${d.n}/${d.inst} · loan ${monthLabel(d.fromMonth)}${d.paid?' · paid':''}</div></div>
+        <div class="cs">Installment ${d.n}/${d.inst} · loan ${monthLabel(d.fromMonth)}${d.paid?' · paid':''}</div></div>
       <div class="ca">${money(d.amount)}</div>
     </div>`;
   }
   return `<div class="coll-row ${d.paid?'done':''} ${editing?'editing':'locked'}" ${editing?`onclick="togInst('${d.loanId}',${d.n})"`:''}>
       <div class="ck">${d.paid?'✓':(editing?'':'·')}</div>
       <div class="ci"><div class="cn">${esc(d.borrower)}</div>
-        <div class="cs">Kisht ${d.n}/${d.inst} · loan ${monthLabel(d.fromMonth)}</div></div>
+        <div class="cs">Installment ${d.n}/${d.inst} · loan ${monthLabel(d.fromMonth)}</div></div>
       <div class="ca">${money(d.amount)}</div>
     </div>`;
 }
@@ -1537,48 +1632,48 @@ function renderLedger(){
     const open=ledgerOpen.has(r.key);
     const pending=r.dueList.filter(d=>!d.paid).length;
     const selMode=(ledgerSelectMonth===r.key);
-    const loansBlock=r.aOut.length?`<div class="led-sub">Naye loan diye (jaavak)</div>
+    const loansBlock=r.aOut.length?`<div class="led-sub">New loans disbursed</div>
         <div class="coll-list">${r.aOut.map(a=>`<div class="coll-row" style="cursor:default"><div class="ck out">↑</div><div class="ci"><div class="cn">${esc(a.nm)}</div></div><div class="ca" style="color:var(--red)">−${money(a.amt)}</div></div>`).join('')}</div>`:'';
     const exitsBlock=r.aEx.length?`<div class="led-sub">Member exits</div>
         <div class="coll-list">${r.aEx.map(a=>`<div class="coll-row" style="cursor:default"><div class="ck out">⤴</div><div class="ci"><div class="cn">${esc(a.nm)}</div></div><div class="ca" style="color:var(--red)">−${money(a.amt)}</div></div>`).join('')}</div>`:'';
     const flowBlock=`<div class="flow" style="background:var(--beige);margin:12px;border-radius:10px">
-        <div class="fr"><span>Pichla shesh</span><span class="v">${money(r.open)}</span></div>
-        <div class="fr in"><span>Aavak${r.isHistory?' (recorded)':' (collect hua)'}</span><span class="v">+${money(r.aavak)}</span></div>
-        <div class="fr out"><span>Naye loan</span><span class="v">−${money(r.jaavak)}</span></div>
+        <div class="fr"><span>Opening balance</span><span class="v">${money(r.open)}</span></div>
+        <div class="fr in"><span>Collections${r.isHistory?' (recorded)':' (received)'}</span><span class="v">+${money(r.aavak)}</span></div>
+        <div class="fr out"><span>New loans</span><span class="v">−${money(r.jaavak)}</span></div>
         ${r.exitSum?`<div class="fr out"><span>Exits</span><span class="v">−${money(r.exitSum)}</span></div>`:''}
-        <div class="fr tot"><span>Mahine ka shesh</span><span class="v">${money(r.close)}</span></div>
+        <div class="fr tot"><span>Closing balance</span><span class="v">${money(r.close)}</span></div>
       </div>`;
-    const distBlock=r.dists.length?`<div class="divider-note" style="margin:0 12px 12px">🪙 Profit baata: ${r.dists.map(d=>esc(d.borrower)+' '+money(d.profit)).join(' · ')} = <b>${money(round3(r.dists.reduce((s,d)=>s+d.profit,0)))}</b></div>`:'';
+    const distBlock=r.dists.length?`<div class="divider-note" style="margin:0 12px 12px">🪙 Profit distributed: ${r.dists.map(d=>esc(d.borrower)+' '+money(d.profit)).join(' · ')} = <b>${money(round3(r.dists.reduce((s,d)=>s+d.profit,0)))}</b></div>`:'';
     const selBar=`<div class="sel-bar">
         ${selMode
-          ? `<span class="edit-hint">☑️ ${ledgerSelections.size} member${ledgerSelections.size===1?'':'s'} select kiye</span><button class="btn sm ghost" onclick="toggleSelectMode('${r.key}')">✕ Cancel</button>`
-          : `<span class="edit-hint locked-hint">☑️ Members select karke unka loan data export karo</span><button class="btn sm ghost" onclick="toggleSelectMode('${r.key}')">☑ Select</button>`}
+          ? `<span class="edit-hint">☑️ ${ledgerSelections.size} member${ledgerSelections.size===1?'':'s'} selected</span><button class="btn sm ghost" onclick="toggleSelectMode('${r.key}')">✕ Cancel</button>`
+          : `<span class="edit-hint locked-hint">☑️ Select members to export their loan details</span><button class="btn sm ghost" onclick="toggleSelectMode('${r.key}')">☑ Select</button>`}
       </div>`;
 
     let body;
     if(r.isHistory){
-      const selBlock=selMode?`<div class="coll-head"><div class="lbl">Kishtein — select karo</div></div>
-        <div class="coll-list">${r.dueList.length?r.dueList.map(d=>dueRowHtml(d,true,false)).join(''):'<div style="padding:16px;color:var(--muted);text-align:center;font-size:13px">Is mahine koi kisht due nahi</div>'}</div>`:'';
+      const selBlock=selMode?`<div class="coll-head"><div class="lbl">Select installments</div></div>
+        <div class="coll-list">${r.dueList.length?r.dueList.map(d=>dueRowHtml(d,true,false)).join(''):'<div style="padding:16px;color:var(--muted);text-align:center;font-size:13px">No installments due this month</div>'}</div>`:'';
       body=`${selBar}${selBlock}${loansBlock}${exitsBlock}${flowBlock}${distBlock}`;
     }else{
       const editing=(ledgerEditMonth===r.key)&&!selMode;
       const coll=r.dueList.map(d=>dueRowHtml(d,selMode,editing)).join('');
       const editBar=selMode?'':`<div class="edit-bar">
         ${editing
-          ? `<span class="edit-hint">✏️ Edit mode — kishtein tick karo</span><button class="btn sm" onclick="toggleEdit('${r.key}')">✓ Save</button>`
-          : `<span class="edit-hint locked-hint">🔒 Locked — galti se touch safe</span><button class="btn sm ghost" onclick="toggleEdit('${r.key}')">✎ Edit</button>`}
+          ? `<span class="edit-hint">✏️ Edit mode — mark installments as received</span><button class="btn sm" onclick="toggleEdit('${r.key}')">✓ Save</button>`
+          : `<span class="edit-hint locked-hint">🔒 Locked — tap Edit to make changes</span><button class="btn sm ghost" onclick="toggleEdit('${r.key}')">✎ Edit</button>`}
       </div>`;
-      body=`${selBar}<div class="coll-head"><div><div class="lbl">Aane wali kishtein (collection)</div>
+      body=`${selBar}<div class="coll-head"><div><div class="lbl">Installments due</div>
           <div class="coll-sum"><b style="color:var(--green)">${money(r.aavak)}</b> collected <span style="color:var(--muted)">/ ${money(r.expected)} expected</span></div></div></div>
         ${editBar}
-        <div class="coll-list">${coll||'<div style="padding:16px;color:var(--muted);text-align:center;font-size:13px">Is mahine koi kisht due nahi</div>'}</div>
+        <div class="coll-list">${coll||'<div style="padding:16px;color:var(--muted);text-align:center;font-size:13px">No installments due this month</div>'}</div>
         ${loansBlock}${exitsBlock}${flowBlock}${distBlock}`;
     }
     return `<div class="card month-card">
       <div class="mh" onclick="toggleMonth('${r.key}')">
         <div><h3>${monthLabel(r.key)} ${r.isHistory?'<span class="chip exited" style="vertical-align:middle">history</span>':r.key===currentMonth()?'<span class="chip open" style="vertical-align:middle">current</span>':''}</h3>
-          <div style="font-size:11.5px;color:var(--muted);margin-top:2px">${r.isHistory?'recorded':(pending?pending+' kishtein baaki':'sab collect ✓')} · ${r.aOut.length} naye loan</div></div>
-        <div class="cl">${money(r.close)}<small>shesh</small></div>
+          <div style="font-size:11.5px;color:var(--muted);margin-top:2px">${r.isHistory?'recorded':(pending?pending+' installments pending':'all collected ✓')} · ${r.aOut.length} new loans</div></div>
+        <div class="cl">${money(r.close)}<small>balance</small></div>
       </div>
       <div id="${id}" style="display:${open?'block':'none'}">${body}</div></div>`;}).join('');
   renderExportBar();
@@ -1588,7 +1683,7 @@ function renderExportBar(){
   if(!bar)return;
   if(!ledgerSelectMonth||ledgerSelections.size===0){bar.innerHTML='';return;}
   bar.innerHTML=`<div class="export-bar">
-      <div class="cnt">${ledgerSelections.size} select kiye<small>${monthLabel(ledgerSelectMonth)}</small></div>
+      <div class="cnt">${ledgerSelections.size} selected<small>${monthLabel(ledgerSelectMonth)}</small></div>
       <div class="acts">
         <button class="btn sm ghost" onclick="openExportChoice()">⬇︎ Export</button>
       </div>
@@ -1612,10 +1707,10 @@ function selectedLoanRows(){
   return r.dueList.filter(d=>ledgerSelections.has(dueRowKey(d)));
 }
 function openExportChoice(){
-  if(!ledgerSelections.size){toast('Pehle members select karo');return;}
+  if(!ledgerSelections.size){toast('Select members first');return;}
   openModal(`<div class="modal-head"><h2>Export selected (${ledgerSelections.size})</h2><span class="x" onclick="closeModal()">×</span></div>
     <div class="modal-body">
-      <p style="margin:0 0 14px;color:var(--ink2);font-size:13.5px">${monthLabel(ledgerSelectMonth)} ke selected members ka loan data. Format choose karo:</p>
+      <p style="margin:0 0 14px;color:var(--ink2);font-size:13.5px">Loan details for selected members in ${monthLabel(ledgerSelectMonth)}. Choose a format:</p>
       <button class="btn full" style="margin-bottom:10px" onclick="closeModal();exportSelectedPDF()">📄 Export as PDF</button>
       <button class="btn full ghost" onclick="closeModal();exportSelectedImage()">🖼️ Export as Image (PNG)</button>
     </div>`);
@@ -1623,8 +1718,8 @@ function openExportChoice(){
 function exportSelectedPDF(){
   const key=ledgerSelectMonth;
   const items=selectedLoanRows();
-  if(!items.length){toast('Kuch select nahi hua');return;}
-  if(!window.jspdf||!window.jspdf.jsPDF){toast('PDF engine load nahi hua');return;}
+  if(!items.length){toast('Nothing selected');return;}
+  if(!window.jspdf||!window.jspdf.jsPDF){toast('The PDF engine could not load');return;}
   const {jsPDF}=window.jspdf;
   const doc=new jsPDF({unit:'pt',format:'a4'});
   const W=doc.internal.pageSize.getWidth(),H=doc.internal.pageSize.getHeight(),M=40;
@@ -1653,7 +1748,7 @@ function exportSelectedPDF(){
     doc.text(d.paid?'PAID':'PENDING',M+nameW+16+amtW+12,y);
     y+=18;
     doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(...muted);
-    doc.text(`Kisht ${d.n}/${d.inst}  ·  loan ${monthLabel(d.fromMonth)}`,M,y);
+    doc.text(`Installment ${d.n}/${d.inst}  ·  loan ${monthLabel(d.fromMonth)}`,M,y);
     y+=28;
   });
   y+=6;
@@ -1663,12 +1758,12 @@ function exportSelectedPDF(){
   const pages=doc.internal.getNumberOfPages();
   for(let i=1;i<=pages;i++){doc.setPage(i);doc.setFontSize(8);doc.setTextColor(...muted);
     doc.text(`VC Ledger  ·  ${state.settings.cur}  ·  page ${i}/${pages}`,W/2,H-18,{align:'center'});}
-  try{doc.save(`VC-Ledger_${key}_selected.pdf`);toast('PDF download ho gaya');}catch(e){toast('PDF save error');}
+  try{doc.save(`VC-Ledger_${key}_selected.pdf`);toast('PDF downloaded');}catch(e){toast('PDF save error');}
 }
 function exportSelectedImage(){
   const key=ledgerSelectMonth;
   const items=selectedLoanRows();
-  if(!items.length){toast('Kuch select nahi hua');return;}
+  if(!items.length){toast('Nothing selected');return;}
   const W=760,rowH=72,headH=112,footH=72;
   const H=headH+items.length*rowH+footH;
   const scale=2;
@@ -1707,7 +1802,7 @@ function exportSelectedImage(){
     // small kisht/month detail below
     ctx.font='400 12px -apple-system, Helvetica, Arial, sans-serif';
     ctx.fillStyle='#6B665C';
-    ctx.fillText(`Kisht ${d.n}/${d.inst} · loan ${monthLabel(d.fromMonth)}`,24,y+52);
+    ctx.fillText(`Installment ${d.n}/${d.inst} · loan ${monthLabel(d.fromMonth)}`,24,y+52);
     y+=rowH;
   });
   ctx.fillStyle='#F0EEE6';ctx.fillRect(0,y,W,footH);
@@ -1722,7 +1817,7 @@ function exportSelectedImage(){
     const a=document.createElement('a');
     a.href=url;a.download=`VC-Ledger_${key}_selected.png`;
     document.body.appendChild(a);a.click();a.remove();
-    toast('Image download ho gayi');
+    toast('Image downloaded');
   }catch(e){toast('Image save error');}
 }
 function toggleEdit(key){
@@ -1735,7 +1830,7 @@ function renderProfit(){
   const pt=document.getElementById('profitTotals');
   const ms=state.members.slice().sort((a,b)=>memberProfitTotal(b.id)-memberProfitTotal(a.id));
   const grand=totalProfitDistributed();
-  if(!grand){pt.innerHTML='<div class="empty"><div class="ic">🪙</div><p>Abhi koi loan complete nahi hua</p><p style="font-size:12.5px">Jab kisi loan ki aakhri kisht aayegi, profit yahan baat jaayega.</p></div>';}
+  if(!grand){pt.innerHTML='<div class="empty"><div class="ic">🪙</div><p>No completed loans yet</p><p style="font-size:12.5px">Profit will appear here when a loan’s final installment is received.</p></div>';}
   else pt.innerHTML='<div style="padding:4px 0">'+ms.filter(m=>memberProfitTotal(m.id)>0).map(m=>`
     <div class="dist-member" style="padding:11px 16px">
       <div><b>${esc(m.name)}</b> <span class="chip sh" style="margin-left:4px">${m.shares}sh</span></div>
@@ -1751,23 +1846,23 @@ function renderProfit(){
     return `<div class="card">
     <div class="mh" style="background:var(--green-soft)" onclick="toggleLed('dm${m.monthKey.replace('-','')}')">
       <div><h3 style="font-size:16px">${monthLabel(m.monthKey)}</h3>
-        <div style="font-size:11.5px;color:var(--muted);margin-top:2px">${m.loans.length} loan complete · ${m.shares} shares · ${money(perShare)}/share</div></div>
+        <div style="font-size:11.5px;color:var(--muted);margin-top:2px">${m.loans.length} loans completed · ${m.shares} shares · ${money(perShare)}/share</div></div>
       <div class="cl" style="color:var(--green)">+${money(m.profit)}<small>profit</small></div>
     </div>
     <div id="dm${m.monthKey.replace('-','')}" style="display:none">
       ${allocs.map(a=>`<div class="dist-member" style="padding:9px 16px"><div>${esc(a.name)} <span style="color:var(--muted);font-size:12px">×${a.shares}</span></div><div class="amt">${money(a.amount)}</div></div>`).join('')}
-      <div class="dist-member" style="padding:11px 16px;border-top:2px solid var(--line)"><b>Total baata</b><div class="amt">${money(round3(allocs.reduce((s,a)=>s+a.amount,0)))}</div></div>
+      <div class="dist-member" style="padding:11px 16px;border-top:2px solid var(--line)"><b>Total distributed</b><div class="amt">${money(round3(allocs.reduce((s,a)=>s+a.amount,0)))}</div></div>
     </div></div>`;}).join('');
 }
 
 function renderNotes(){
   const list=document.getElementById('notesList');
   const ns=[...(state.notes||[])].sort((a,b)=>(b.updated||0)-(a.updated||0));
-  if(!ns.length){list.innerHTML=`<div class="empty"><div class="ic">${glassIcon('sticky-note')}</div><p>Abhi koi note nahi</p><p style="font-size:12px">Upar + dabakar pehla note likho</p></div>`;return;}
+  if(!ns.length){list.innerHTML=`<div class="empty"><div class="ic">${glassIcon('sticky-note')}</div><p>No notes yet</p><p style="font-size:12px">Tap + above to add your first note</p></div>`;return;}
   list.innerHTML=ns.map(n=>{
     const d=n.updated?new Date(n.updated):null;
     const ds=d?d.toLocaleDateString('en-GB')+' '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}):'';
-    const title=(n.text||'').trim().split('\n')[0].slice(0,40)||'(khaali note)';
+    const title=(n.text||'').trim().split('\n')[0].slice(0,40)||'(empty note)';
     return `<article class="card glass-note"><div class="glass-note-top"><span>YOUR NOTE</span>${glassIcon('sticky-note')}</div><h3>${esc(title)}</h3><div class="note-preview">${esc((n.text||'').trim())}</div><div class="glass-note-footer"><span>${ds}</span><button onclick="noteForm('${n.id}')" aria-label="Edit ${esc(title)}">${glassIcon('pencil')}</button></div></article>`;
   }).join('');
 }
@@ -1775,23 +1870,23 @@ function renderNotes(){
 
 function noteForm(id){
   const n=id?(state.notes||[]).find(x=>x.id===id):null;
-  openModal(`<div class="modal-head"><h2>${n?'Edit note':'Naya note'}</h2><button class="x" onclick="closeModal()">×</button></div>
+  openModal(`<div class="modal-head"><h2>${n?'Edit note':'New note'}</h2><button class="x" onclick="closeModal()">×</button></div>
   <div class="modal-body">
-    <div class="field"><label>Note</label><textarea id="noteText" placeholder="Yahan kuch bhi likho…">${n?esc(n.text):''}</textarea></div>
+    <div class="field"><label>Note</label><textarea id="noteText" placeholder="Write your note here…">${n?esc(n.text):''}</textarea></div>
     <button class="btn full" onclick="saveNote('${id||''}')">${n?'Save changes':'Add note'}</button>
     ${n?`<button class="btn full ghost danger" style="margin-top:10px;color:var(--red)" onclick="delNote('${n.id}')">Delete note</button>`:''}
   </div>`);
 }
 function saveNote(id){
   const text=document.getElementById('noteText').value;
-  if(!text.trim()){toast('Kuch likho pehle');return;}
+  if(!text.trim()){toast('Enter a note first');return;}
   if(!state.notes)state.notes=[];
   if(id){const n=state.notes.find(x=>x.id===id);n.text=text;n.updated=Date.now();}
   else state.notes.push({id:uid(),text,updated:Date.now()});
   closeModal();persist();render();toast(id?'Note updated':'Note added');
 }
 function delNote(id){
-  if(!confirm('Note delete karein?'))return;
+  if(!confirm('Delete this note?'))return;
   state.notes=(state.notes||[]).filter(n=>n.id!==id);
   closeModal();persist();render();toast('Note deleted');
 }
@@ -1834,7 +1929,7 @@ function hl(text,q){
 }
 
 function renderSearch(){
-  const chips=[['all','Sab'],['members','Members'],['loans','Loans'],['months','Mahine'],['profit','Profit']];
+  const chips=[['all','All'],['members','Members'],['loans','Loans'],['months','Months'],['profit','Profit']];
   const chipBox=document.getElementById('searchChips');
   if(chipBox)chipBox.innerHTML=chips.map(c=>`<button class="fchip ${searchFilter===c[0]?'on':''}" onclick="setSearchFilter('${c[0]}')">${c[1]}</button>`).join('');
   const box=document.getElementById('searchResults');
@@ -1855,7 +1950,7 @@ function renderSearch(){
     const more=rows.length-shown.length;
     return `<div class="sres-lbl">${label}<span class="ct">${rows.length}</span></div>
       <div class="card">${shown.join('')}
-      ${more>0?`<div class="smore" onclick="expandSearch('${cat}')">+${more} aur dikhao →</div>`:''}</div>`;
+      ${more>0?`<div class="smore" onclick="expandSearch('${cat}')">+${more} more →</div>`:''}</div>`;
   };
 
   /* quick pool stats — empty query or stats keywords */
@@ -1865,7 +1960,7 @@ function renderSearch(){
       <div class="st"><div class="k">Members' capital</div><div class="v">${money(poolCapital())}</div></div>
       <div class="st"><div class="k">Cash in hand</div><div class="v">${money(currentBalance())}</div></div>
       <div class="st"><div class="k">Outstanding</div><div class="v">${money(totalOutstanding())}</div></div>
-      <div class="st"><div class="k">Profit baata</div><div class="v">${money(totalProfitDistributed())}</div></div>
+      <div class="st"><div class="k">Profit distributed</div><div class="v">${money(totalProfitDistributed())}</div></div>
     </div>`;
   }
 
@@ -1893,15 +1988,15 @@ function renderSearch(){
     const rows=state.loans.filter(l=>{
       const overdue=l.installments.some(i=>!i.paid&&i.due<cm);
       const txt=l.borrower+' loan '+l.gross+' '+money(l.gross)+' '+monthLabel(l.start)+' '+monthFull(l.start)+' '+l.start+' '+l.status
-        +(l.status==='active'?' running active pending baaki':' completed done paid pura')+(overdue?' overdue late':'');
+        +(l.status==='active'?' running active pending baaki remaining':' completed done paid pura complete')+(overdue?' overdue late':'');
       return m(txt);
     }).sort((a,b)=>monthCmp(b.start,a.start)).map(l=>{
       const paid=l.installments.filter(i=>i.paid).length;
       return `<div class="lrow tap" onclick="openLoan('${l.id}')">
         <div class="av">${initials(l.borrower)}</div>
         <div class="mn"><div class="nm">${hl(l.borrower,q)}</div>
-          <div class="ds">${paid}/${l.inst} kishtein · gross ${money(l.gross)} · ${monthLabel(l.start)}</div></div>
-        <div class="rt"><div class="big">${money(l.gross)}</div><div class="sm">${l.status==='completed'?'<span class="chip done">done</span>':money(loanOutstanding(l))+' baaki'}</div></div>
+          <div class="ds">${paid}/${l.inst} installments · gross ${money(l.gross)} · ${monthLabel(l.start)}</div></div>
+        <div class="rt"><div class="big">${money(l.gross)}</div><div class="sm">${l.status==='completed'?'<span class="chip done">done</span>':money(loanOutstanding(l))+' remaining'}</div></div>
       </div>`;
     });
     html+=section('loans','Loans',rows);
@@ -1910,15 +2005,15 @@ function renderSearch(){
   /* MONTHS (ledger) */
   if(F==='all'||F==='months'){
     const rows=buildLedger().slice().reverse().filter(r=>{
-      const txt=monthLabel(r.key)+' '+monthFull(r.key)+' '+r.key+' month '+(r.isHistory?'history':'')+' aavak '+money(r.aavak)+' shesh balance '+money(r.close)+' jaavak '+money(r.jaavak);
+      const txt=monthLabel(r.key)+' '+monthFull(r.key)+' '+r.key+' month '+(r.isHistory?'history':'')+' aavak collections incoming '+money(r.aavak)+' shesh balance '+money(r.close)+' jaavak disbursed outgoing '+money(r.jaavak);
       return m(txt);
     }).map(r=>`<div class="lrow tap" onclick="openLedgerMonth('${r.key}')">
         <div class="av" style="background:var(--blue-soft);color:var(--blue)">📅</div>
         <div class="mn"><div class="nm">${hl(monthLabel(r.key),q)} ${r.isHistory?'<span class="chip exited" style="vertical-align:middle">history</span>':(r.key===cm?'<span class="chip open" style="vertical-align:middle">current</span>':'')}</div>
-          <div class="ds">aavak ${money(r.aavak)} · ${r.aOut.length} naye loan</div></div>
-        <div class="rt"><div class="big">${money(r.close)}</div><div class="sm">shesh</div></div>
+          <div class="ds">Collections ${money(r.aavak)} · ${r.aOut.length} new loans</div></div>
+        <div class="rt"><div class="big">${money(r.close)}</div><div class="sm">balance</div></div>
       </div>`);
-    html+=section('months','Mahine',rows);
+    html+=section('months','Months',rows);
   }
 
   /* PROFIT */
@@ -1930,7 +2025,7 @@ function renderSearch(){
     }).map(d=>`<div class="lrow tap" onclick="go('profit')">
         <div class="av" style="background:var(--green-soft);color:var(--green)">🪙</div>
         <div class="mn"><div class="nm">${hl(monthLabel(d.monthKey),q)}</div>
-          <div class="ds">${d.loans.length} loan complete · ${d.shares} shares</div></div>
+          <div class="ds">${d.loans.length} loans completed · ${d.shares} shares</div></div>
         <div class="rt"><div class="big" style="color:var(--green)">+${money(d.profit)}</div><div class="sm">${money(round3(d.profit/(d.shares||1)))}/sh</div></div>
       </div>`);
     html+=section('profit','Profit splits',rows);
@@ -1949,7 +2044,7 @@ function renderSearch(){
   }
 
   if(totalCount===0&&!showStats){
-    html+=`<div class="empty"><div class="ic">🔍</div><p>${q?'Kuch nahi mila "'+esc(searchQuery)+'" ke liye':'Naam, amount, mahina ya status type karo'}</p>${q?'<p style="font-size:12.5px">Spelling check karo ya filter badlo</p>':'<p style="font-size:12.5px">Jaise: Aashish · 500 · March · pending · overdue · total</p>'}</div>`;
+    html+=`<div class="empty"><div class="ic">🔍</div><p>${q?'No results for "'+esc(searchQuery)+'"':'Search by name, amount, month or status'}</p>${q?'<p style="font-size:12.5px">Check the spelling or change the filter</p>':'<p style="font-size:12.5px">Try: Aashish · 500 · March · pending · overdue · total</p>'}</div>`;
   }
   box.innerHTML=html;
 }
@@ -1981,7 +2076,7 @@ function memberForm(id){
     <div class="field"><label>Shares (10 KD/month = 1 share)</label><input id="mShares" type="number" min="1" value="${m?m.shares:1}"></div>
     <div class="calc-box">
       <div class="ln"><span>Base (shares × ${money(state.settings.perShare)})</span><b id="mBase">${money(m?baseCapital(m):state.settings.perShare)}</b></div>
-      <div class="ln"><span>Profit jud chuka</span><b>${money(m?memberProfitTotal(m.id):0)}</b></div>
+      <div class="ln"><span>Profit added</span><b>${money(m?memberProfitTotal(m.id):0)}</b></div>
       <div class="ln hi"><span>Total capital</span><b id="mCap">${money(m?memberCapital(m):state.settings.perShare)}</b></div>
     </div>
     <button class="btn full" onclick="saveMember('${id||''}')">${m?'Save changes':'Add member'}</button>
@@ -1999,13 +2094,13 @@ function openMember(id){memberForm(id);}
 function saveMember(id){
   const name=document.getElementById('mName').value.trim();
   const shares=+document.getElementById('mShares').value||0;
-  if(!name){toast('Name daalo');return;}
-  if(shares<1){toast('Kam se kam 1 share');return;}
+  if(!name){toast('Enter a name');return;}
+  if(shares<1){toast('Enter at least 1 share');return;}
   if(id){const m=state.members.find(x=>x.id===id);m.name=name;m.shares=shares;}
   else state.members.push({id:uid(),name,shares,status:'active'});
   closeModal();commit(id?'Member updated':'Member added');
 }
-function delMember(id){if(!confirm('Is member ko delete karein? Iske purane profit records bhi hat jaayenge.'))return;
+function delMember(id){if(!confirm('Delete this member? Their associated exit records will also be removed.'))return;
   state.members=state.members.filter(m=>m.id!==id);state.exits=state.exits.filter(e=>e.memberId!==id);
   closeModal();commit('Member deleted');}
 function reactivate(id){const m=state.members.find(x=>x.id===id);m.status='active';delete m.exitMonth;
@@ -2016,7 +2111,7 @@ function exitForm(id){
   const suggested=memberCapital(m); // base + accumulated profit
   openModal(`<div class="modal-head"><h2>Exit — ${esc(m.name)}</h2><button class="x" onclick="closeModal()">×</button></div>
   <div class="modal-body">
-    <div class="note-line">Member nikal raha hai. Capital (base + jud chuka profit) wapsi cash balance se ghategi aur uske share pool se hat jaayenge.</div>
+    <div class="note-line">The withdrawal will reduce the cash balance, and this member’s shares will leave the active pool.</div>
     <div class="field"><label>Withdraw amount</label><input id="exAmt" type="number" step="0.001" value="${suggested}"></div>
     <div class="field"><label>Exit month</label><input id="exMonth" type="month" value="${todayMonth()}"></div>
     <button class="btn full danger" onclick="doExit('${id}')">Confirm exit</button>
@@ -2037,9 +2132,9 @@ function loanForm(id){
   const rate=state.settings.rate,inst=state.settings.inst;
   openModal(`<div class="modal-head"><h2>${l?'Edit loan':'New loan'}</h2><button class="x" onclick="closeModal()">×</button></div>
   <div class="modal-body">
-    <div class="field"><label>Borrower name</label><input id="lName" type="text" value="${l?esc(l.borrower):''}" placeholder="Kisko loan diya"></div>
-    <div class="field"><label>Loan amount (gross — jitna wapas karega)</label><input id="lGross" type="number" step="0.001" value="${l?l.gross:''}" placeholder="e.g. 100"></div>
-    <div class="field"><label>Loan month (diya kab)</label><input id="lMonth" type="month" value="${l?l.start:todayMonth()}"></div>
+    <div class="field"><label>Borrower name</label><input id="lName" type="text" value="${l?esc(l.borrower):''}" placeholder="Borrower name"></div>
+    <div class="field"><label>Loan amount (gross — total to repay)</label><input id="lGross" type="number" step="0.001" value="${l?l.gross:''}" placeholder="e.g. 100"></div>
+    <div class="field"><label>Loan month (when disbursed)</label><input id="lMonth" type="month" value="${l?l.start:todayMonth()}"></div>
     <div class="calc-box" id="lCalc"></div>
     <button class="btn full" onclick="saveLoan('${id||''}')">${l?'Save changes':'Add loan'}</button>
     ${l?`<button class="btn full ghost danger" style="margin-top:10px;color:var(--red)" onclick="delLoan('${l.id}')">Delete loan</button>`:''}
@@ -2047,9 +2142,9 @@ function loanForm(id){
   const g=document.getElementById('lGross');
   const upd=()=>{const gr=+g.value||0;const net=round3(gr*(1-rate/100));const prof=round3(gr*rate/100);const each=round3(gr/inst);
     document.getElementById('lCalc').innerHTML=`
-      <div class="ln"><span>Borrower ko milega (−${rate}%)</span><b>${money(net)}</b></div>
-      <div class="ln"><span>${inst} kishtein</span><b>${money(each)} × ${inst}</b></div>
-      <div class="ln hi"><span>Pool ka profit</span><b>${money(prof)}</b></div>`;};
+      <div class="ln"><span>Borrower receives (−${rate}%)</span><b>${money(net)}</b></div>
+      <div class="ln"><span>${inst} installments</span><b>${money(each)} × ${inst}</b></div>
+      <div class="ln hi"><span>Pool profit</span><b>${money(prof)}</b></div>`;};
   g.oninput=upd;upd();
 }
 function openLoan(id){loanDetail(id);}
@@ -2058,7 +2153,7 @@ function loanDetail(id,editing){
   const rows=l.installments.map(i=>`
     <div class="coll-row ${i.paid?'done':''} ${editing?'editing':'locked'}" ${editing?`onclick="togInst('${l.id}',${i.n});loanDetail('${l.id}',true)"`:''}>
       <div class="ck">${i.paid?'✓':i.n}</div>
-      <div class="ci"><div class="cn">Kisht ${i.n}</div>
+      <div class="ci"><div class="cn">Installment ${i.n}</div>
         <div class="cs">${monthLabel(i.due)}${i.paid&&i.paidMonth?' · received '+monthLabel(i.paidMonth):' · pending'}</div></div>
       <div class="ca">${money(i.amount)}</div>
     </div>`).join('');
@@ -2066,17 +2161,17 @@ function loanDetail(id,editing){
   <div class="modal-body">
     <div class="calc-box">
       <div class="ln"><span>Gross loan</span><b>${money(l.gross)}</b></div>
-      <div class="ln"><span>Diya (net, −${l.rate}%)</span><b>${money(netOf(l))}</b></div>
-      <div class="ln"><span>Status</span><b>${l.status==='completed'?'Completed ✓':money(loanOutstanding(l))+' baaki'}</b></div>
+      <div class="ln"><span>Disbursed (net, −${l.rate}%)</span><b>${money(netOf(l))}</b></div>
+      <div class="ln"><span>Status</span><b>${l.status==='completed'?'Completed ✓':money(loanOutstanding(l))+' remaining'}</b></div>
       <div class="ln hi"><span>Profit (on completion)</span><b>${money(profitOf(l))}</b></div>
     </div>
     <div class="sel-bar" style="margin-bottom:8px">
       ${editing
-        ? `<span class="edit-hint">✏️ Edit mode on — kisht tap karke tick/untick karo</span><button class="btn sm ghost" onclick="loanDetail('${l.id}')">✓ Done</button>`
-        : `<span class="edit-hint locked-hint">🔒 Kishtein locked hain — tick karne ke liye Edit dabao</span><button class="btn sm ghost" onclick="loanDetail('${l.id}',true)">✏️ Edit</button>`}
+        ? `<span class="edit-hint">✏️ Edit mode — tap an installment to mark or unmark it</span><button class="btn sm ghost" onclick="loanDetail('${l.id}')">✓ Done</button>`
+        : `<span class="edit-hint locked-hint">🔒 Installments locked — tap Edit to update payments</span><button class="btn sm ghost" onclick="loanDetail('${l.id}',true)">✏️ Edit</button>`}
     </div>
     <div class="coll-list" style="border:1px solid var(--line);border-radius:10px;margin-bottom:16px">${rows}</div>
-    <div class="note-line">Aakhri kisht mark karte hi profit us mahine sabhi active members me baat jaayega.</div>
+    <div class="note-line">Receiving the final installment distributes the profit among active members for that month.</div>
     <div style="display:flex;gap:10px">
       <button class="btn ghost" style="flex:1" onclick="loanForm('${l.id}')">✏️ Edit</button>
       <button class="btn ghost" style="flex:1;color:var(--red);border-color:var(--red)" onclick="delLoan('${l.id}')">🗑️ Delete</button>
@@ -2087,8 +2182,8 @@ function saveLoan(id){
   const name=document.getElementById('lName').value.trim();
   const gross=round3(+document.getElementById('lGross').value||0);
   const mo=document.getElementById('lMonth').value||todayMonth();
-  if(!name){toast('Borrower name daalo');return;}
-  if(gross<=0){toast('Amount daalo');return;}
+  if(!name){toast('Enter the borrower’s name');return;}
+  if(gross<=0){toast('Enter an amount');return;}
   if(id){const l=state.loans.find(x=>x.id===id);
     // preserve paid status by index
     const paidStates=l.installments.map(i=>({paid:i.paid,paidMonth:i.paidMonth}));
@@ -2099,7 +2194,7 @@ function saveLoan(id){
   }else state.loans.push(makeLoan(name,gross,mo,false));
   closeModal();commit(id?'Loan updated':'Loan added');
 }
-function delLoan(id){if(!confirm('Loan delete karein?'))return;state.loans=state.loans.filter(l=>l.id!==id);closeModal();commit('Loan deleted');}
+function delLoan(id){if(!confirm('Delete this loan?'))return;state.loans=state.loans.filter(l=>l.id!==id);closeModal();commit('Loan deleted');}
 
 function togInst(loanId,n){
   const l=state.loans.find(x=>x.id===loanId);const i=l.installments.find(x=>x.n===n);
@@ -2108,7 +2203,7 @@ function togInst(loanId,n){
   else{i.paid=false;i.paidMonth=null;}
   recomputeDistributions();persist();render();
   const nowComplete=l.installments.every(x=>x.paid);
-  if(nowComplete&&!wasComplete)toast('Loan complete — profit baat diya 🪙');
+  if(nowComplete&&!wasComplete)toast('Loan completed — profit distributed 🪙');
 }
 
 /* ---------- settings ---------- */
@@ -2134,8 +2229,8 @@ function generateReport(){
   if(from>to){const t=from;from=to;to=t;}
   const all=buildLedger();
   const rows=all.filter(r=>r.key>=from&&r.key<=to);
-  if(!rows.length){toast('Is range me koi data nahi');return;}
-  if(!window.jspdf||!window.jspdf.jsPDF){toast('PDF engine load nahi hua');return;}
+  if(!rows.length){toast('No data in this date range');return;}
+  if(!window.jspdf||!window.jspdf.jsPDF){toast('The PDF engine could not load');return;}
 
   const {jsPDF}=window.jspdf;
   const doc=new jsPDF({unit:'pt',format:'a4'});
@@ -2160,7 +2255,7 @@ function generateReport(){
   doc.setFillColor(227,236,241);doc.roundedRect(M,y,W-2*M,48,6,6,'F');
   doc.setTextColor(90,122,138);doc.setFontSize(8.5);doc.setFont('helvetica','bold');
   doc.text(`CURRENT MONTH (${monthLabel(cm)}) - OPENING`,M+14,y+17);
-  doc.text(`IS MONTH AANE WALI AAVAK`,M+colW+14,y+17);
+  doc.text(`EXPECTED COLLECTION THIS MONTH`,M+colW+14,y+17);
   doc.setFontSize(15);doc.setTextColor(58,90,106);
   doc.text(`${money(cmRow?cmRow.open:0)} ${s.cur}`,M+14,y+36);
   doc.text(`${money(cmRow?cmRow.expected:0)} ${s.cur}`,M+colW+14,y+36);
@@ -2169,7 +2264,7 @@ function generateReport(){
   doc.autoTable({startY:y,margin:{left:M,right:M},
     head:[['Range summary','']],
     body:[[`Opening (${monthLabel(from)})`,money(openingAtStart)+' '+s.cur],
-      ['Total aavak (incoming)',money(totIn)],['Total loans given',money(totLoan)],
+      ['Total collections (incoming)',money(totIn)],['Total loans given',money(totLoan)],
       ['Total exits',money(totExit)],['Profit distributed',money(totProfit)],
       [`Closing (${monthLabel(to)})`,money(closingAtEnd)+' '+s.cur]],
     theme:'grid',headStyles:{fillColor:accent,textColor:255,fontStyle:'bold'},
@@ -2181,7 +2276,7 @@ function generateReport(){
     doc.setFont('helvetica','bold');doc.setFontSize(13);doc.setTextColor(...ink);
     doc.text(monthLabel(r.key)+(r.isHistory?'  (history)':(r.key===cm?'  (current)':'')),M,y);y+=8;
     doc.autoTable({startY:y,margin:{left:M,right:M},
-      body:[['Opening balance',money(r.open)],['Aavak (incoming)','+ '+money(r.aavak)],
+      body:[['Opening balance',money(r.open)],['Collections (incoming)','+ '+money(r.aavak)],
         ['Loans given','- '+money(r.jaavak)],...(r.exitSum?[['Member exits','- '+money(r.exitSum)]]:[]),
         ['Closing balance',money(r.close)]],
       theme:'plain',styles:{fontSize:10,cellPadding:3},columnStyles:{1:{halign:'right'}},
@@ -2223,7 +2318,7 @@ function generateReport(){
   for(let i=1;i<=pages;i++){doc.setPage(i);doc.setFontSize(8);doc.setTextColor(...muted);
     doc.text(`VC Ledger  ·  ${s.cur}  ·  page ${i}/${pages}`,W/2,H-18,{align:'center'});}
 
-  try{doc.save(`VC-Ledger_${from}_to_${to}.pdf`);toast('PDF download ho gaya');}
+  try{doc.save(`VC-Ledger_${from}_to_${to}.pdf`);toast('PDF downloaded');}
   catch(e){toast('PDF save error');}
 }
 function exportData(){
@@ -2234,20 +2329,20 @@ function exportData(){
 function importData(ev){
   const f=ev.target.files[0];if(!f)return;const r=new FileReader();
   r.onload=()=>{try{const d=JSON.parse(r.result);if(!d.settings)throw 0;state=d;
-    recomputeDistributions();persist();go('dash');toast('Data restored');}catch(e){toast('Galat file');}};
+    recomputeDistributions();persist();go('dash');toast('Data restored');}catch(e){toast('Invalid backup file');}};
   r.readAsText(f);ev.target.value='';
 }
 function exportCSV(){
   const rows=buildLedger();
-  let csv='Month,Opening,Aavak,New Loans,Exits,Closing\n';
+  let csv='Month,Opening,Collections,New Loans,Exits,Closing\n';
   rows.forEach(r=>{csv+=`${monthLabel(r.key)},${money(r.open)},${money(r.aavak)},${money(r.jaavak)},${money(r.exitSum)},${money(r.close)}\n`;});
   csv+='\nProfit Distributions\nMonth,Borrower,Profit,Shares,PerShare\n';
   state.distributions.forEach(d=>{csv+=`${monthLabel(d.monthKey)},${d.borrower},${money(d.profit)},${d.shares},${money(d.perShare)}\n`;});
   const blob=new Blob([csv],{type:'text/csv'});const a=document.createElement('a');
   a.href=URL.createObjectURL(blob);a.download='vc-ledger-'+todayMonth()+'.csv';a.click();toast('CSV exported');
 }
-function resetAll(){if(!confirm('Saara data mit jaayega. Pakka?'))return;
-  if(!confirm('Last chance — ye wapas nahi aayega. Backup le liya?'))return;
+function resetAll(){if(!confirm('All data will be erased and replaced with the initial ledger. Continue?'))return;
+  if(!confirm('This cannot be undone. Have you downloaded a backup?'))return;
   localStorage.removeItem(KEY);state=seed();recomputeDistributions();persist();go('dash');toast('Reset done');}
 
 /* ============================================================
@@ -2290,18 +2385,18 @@ async function cloudCheckSession(){
 
 async function doAuth(email,pw,signup,fromGate){
   const msg=(m)=>{const g=document.getElementById('gateMsg');if(fromGate&&g)g.textContent=m;else toast(m);};
-  if(!sb){msg('Internet chahiye');return;}
-  if(!email||!pw){msg('Email aur password daalo');return;}
+  if(!sb){msg('An internet connection is required');return;}
+  if(!email||!pw){msg('Enter your email and password');return;}
   setBadge('sync');if(fromGate)msg('Checking…');
   try{
     const res=signup?await sb.auth.signUp({email,password:pw})
                     :await sb.auth.signInWithPassword({email,password:pw});
     if(res.error){msg(res.error.message);setBadge('login');return;}
     const session=res.data.session;
-    if(!session){msg(signup?'Email pe confirmation link aaya — click karke phir Login karo':'Login fail');setBadge('login');return;}
+    if(!session){msg(signup?'Check your email for a confirmation link, then log in':'Login failed');setBadge('login');return;}
     cloudUid=session.user.id;cloudEmail=session.user.email;
     await cloudPull();onAuthed();
-  }catch(e){msg('Connect error — internet/keys check karo');setBadge('offline');}
+  }catch(e){msg('Connection error — check your internet connection and project credentials');setBadge('offline');}
 }
 function cloudAuth(signup){
   doAuth((document.getElementById('clEmail')||{}).value,(document.getElementById('clPw')||{}).value,signup,false);
@@ -2364,23 +2459,23 @@ function cloudSync(){
 function saveCloudConfig(){
   const url=(document.getElementById('clUrl')||{}).value;
   const key=(document.getElementById('clKey')||{}).value;
-  if(!url||!key){toast('Project URL aur anon key dono daalo');return;}
+  if(!url||!key){toast('Enter both the project URL and public key');return;}
   setCloudCfg(url.trim(),key.trim());
-  if(initCloud()){toast('Connected — ab login/signup karo');cloudCheckSession();}
-  else toast('Supabase library load nahi hui (online ho?)');
+  if(initCloud()){toast('Connected — log in or sign up');cloudCheckSession();}
+  else toast('The cloud library could not load. Check your internet connection');
   renderSettings();
 }
 function disconnectCloud(){
-  if(!confirm('Cloud disconnect karein? Local data safe rahega.'))return;
+  if(!confirm('Disconnect cloud sync? Local data will be kept.'))return;
   clearCloudCfg();sb=null;cloudUid=null;cloudEmail=null;setBadge('off');renderSettings();
 }
 
 function renderCloudCard(){
   const el=document.getElementById('cloudCard');if(!el)return;
   const c=activeCfg();
-  if(!window.supabase){el.innerHTML='<p style="margin:0;color:var(--ink2);font-size:13.5px">Cloud ke liye internet chahiye. Online hone par yahan login option aayega. Abhi data local me safe hai.</p>';return;}
+  if(!window.supabase){el.innerHTML='<p style="margin:0;color:var(--ink2);font-size:13.5px">Cloud sync needs an internet connection. Login will be available when you are online. Your local data is still saved.</p>';return;}
   if(!c){
-    el.innerHTML=`<p style="margin:0 0 12px;color:var(--ink2);font-size:13.5px">Supabase project ka <b>URL</b> aur <b>anon key</b> daalo (Supabase → Settings → API).</p>
+    el.innerHTML=`<p style="margin:0 0 12px;color:var(--ink2);font-size:13.5px">Enter your Supabase project’s <b>URL</b> and <b>public key</b> (Supabase → Settings → API).</p>
       <div class="field"><label>Project URL</label><input id="clUrl" type="text" placeholder="https://xxxx.supabase.co"></div>
       <div class="field"><label>anon public key</label><input id="clKey" type="text" placeholder="eyJ..."></div>
       <button class="btn full" onclick="saveCloudConfig()">Connect</button>`;
@@ -2389,9 +2484,9 @@ function renderCloudCard(){
   if(!cloudUid){
     const host=(c.url||'').replace('https://','').replace('.supabase.co','');
     el.innerHTML=`<p style="margin:0 0 4px;color:var(--green);font-size:13.5px">✓ Project connected <span style="color:var(--muted)">(${esc(host)})</span></p>
-      <p style="margin:0 0 12px;color:var(--ink2);font-size:13px">Pehli baar <b>Sign up</b> dabao (email + password). Baad me hamesha <b>Login</b>.</p>
-      <div class="field"><label>Email</label><input id="clEmail" type="email" placeholder="tumhara@email.com"></div>
-      <div class="field"><label>Password</label><input id="clPw" type="password" placeholder="password (yaad rakhna)"></div>
+      <p style="margin:0 0 12px;color:var(--ink2);font-size:13px">Choose <b>Sign up</b> to create an account with your email and password. Use <b>Login</b> for future visits.</p>
+      <div class="field"><label>Email</label><input id="clEmail" type="email" placeholder="you@example.com"></div>
+      <div class="field"><label>Password</label><input id="clPw" type="password" placeholder="Enter your password"></div>
       <div class="frow"><button class="btn" style="flex:1" onclick="cloudAuth(false)">Login</button>
         <button class="btn ghost" style="flex:1" onclick="cloudAuth(true)">Sign up</button></div>`;
     return;
@@ -2399,7 +2494,7 @@ function renderCloudCard(){
   el.innerHTML=`<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
       <div style="width:38px;height:38px;border-radius:50%;background:var(--green-soft);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:18px">☁︎</div>
       <div><div style="font-weight:600">Cloud synced</div><div style="font-size:12.5px;color:var(--muted)">${esc(cloudEmail||'')}</div></div></div>
-    <p style="margin:0 0 12px;color:var(--ink2);font-size:13px">Tera data ab cloud me save ho raha hai — kisi bhi device pe isi email se login karke same data milega.</p>
+    <p style="margin:0 0 12px;color:var(--ink2);font-size:13px">Your data is saved in the cloud. Log in with the same email on any device to access your ledger.</p>
     <button class="btn full ghost" style="margin-bottom:10px" onclick="cloudPush().then(()=>toast('Sync done ✓'))">Sync now</button>
     <button class="btn full ghost" onclick="cloudLogout()">Logout</button>`;
 }
@@ -2431,7 +2526,7 @@ function boot(){
   setBadge('login');
   if(initCloud())cloudCheckSession();
   else{setBadge('off');
-    const g=document.getElementById('gateMsg');if(g)g.textContent='Internet chahiye login ke liye';}
+    const g=document.getElementById('gateMsg');if(g)g.textContent='An internet connection is required to log in';}
 }
 boot();
 
